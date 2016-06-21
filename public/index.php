@@ -8,6 +8,7 @@ use Fab\Router;
 $router = new Router\Router();
 
 $router->get('/', 'MainController', 'index');
+$router->get('/gallery', 'MainController', 'portfolio');
 
 ////See inside $router
 //echo "<pre>";
