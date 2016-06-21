@@ -291,7 +291,7 @@
 		var contentString = $('#'+obj).attr("data-string");
 		var myLatlng = new google.maps.LatLng(lat,lng);
 		var map, marker, infowindow;
-		var image = 'img/marker.png';
+		var image = 'images/marker.png';
 		var zoomLevel = parseInt($('#'+obj).attr("data-zoom"),10);
 		var styles = stylesArray[$('#map-canvas-contact').attr("data-style")]['style'];
 		var styledMap = new google.maps.StyledMapType(styles,{name: "Styled Map"});

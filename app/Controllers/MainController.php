@@ -21,7 +21,7 @@ class MainController extends Controller
 
     public function contact()
     {
-//        echo $this->twig->render('contact.twig');
+        echo $this->twig->render('contact.twig');
     }
     
 }

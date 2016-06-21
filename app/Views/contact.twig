@@ -1,72 +1,198 @@
-{% extends "master.twig" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
 
-{% block title %} Contact {% endblock title %}
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
 
-{% block content %}
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="css/animsition.min.css" rel="stylesheet"/>
+    <link href="css/magnific-popup.css" rel="stylesheet"/>
+    <link href="css/stylePortfolio.css" rel="stylesheet" type="text/css"/>
+    <title>Acerola</title>
+</head>
+<body class="animsition">
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">
+                Acerola
+            </a>
+        </div>
+        <div class="nav-menu-icon">
+            <a href="#"><i></i></a>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#">Home<span class="fa fa-angle-down"></span></a>
+                    <ul class="dropmenu">
+                        <li><a href="index.html" class="animsition-link">ShowCase</a></li>
+                        <li><a href="index_slider.html" class="animsition-link">Slider</a></li>
+                        <li><a href="index_video.html" class="animsition-link">Video</a></li>
+                        <li><a href="index_scroll.html" class="animsition-link">Ultra Minimal</a></li>
+                        <li><a href="index_onepage.html" class="animsition-link">OnePage</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Portfolio<span class="fa fa-angle-down"></span></a>
+                    <ul class="dropmenu">
+                        <li><a href="#" class="submenu">boxed with gutter<span class="fa fa-angle-down"></span></a>
+                            <ul>
+                                <li><a href="portfolio_mas_gutter_col2.html" class="animsition-link">2 columns</a></li>
+                                <li><a href="portfolio_mas_gutter_col3.html" class="animsition-link">3 columns</a></li>
+                                <li><a href="portfolio_mas_gutter_col4.html" class="animsition-link">4 columns</a></li>
+                                <li><a href="portfolio_filter.html" class="animsition-link">filter</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="submenu">boxed without gutter<span class="fa fa-angle-down"></span></a>
+                            <ul>
+                                <li><a href="portfolio_mas_nogutter_col2.html" class="animsition-link">2 columns</a></li>
+                                <li><a href="portfolio_mas_nogutter_col3.html" class="animsition-link">3 columns</a></li>
+                                <li><a href="portfolio_mas_nogutter_col4.html" class="animsition-link">4 columns</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="submenu">detail<span class="fa fa-angle-down"></span></a>
+                            <ul>
+                                <li><a href="portfolio_detail2.html" class="animsition-link">Detail 1</a></li>
+                                <li><a href="portfolio_detail3.html" class="animsition-link">Detail 2</a></li>
+                                <li><a href="portfolio_detail4.html" class="animsition-link">Detail 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#">Pages<span class="fa fa-angle-down"></span></a>
+                    <ul class="dropmenu">
+                        <li><a href="about2.html" class="animsition-link">About Us</a></li>
+                        <li><a href="faq3.html" class="animsition-link">FAQ</a></li>
+                        <li><a href="team_2.html" class="animsition-link">Team</a></li>
+                        <li><a href="price.html" class="animsition-link">Price</a></li>
+                        <li><a href="contact.html" class="animsition-link">Contact Us</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">shop<span class="fa fa-angle-down"></span></a>
+                    <ul class="dropmenu">
+                        <li><a href="shop_left_filter.html" class="animsition-link">List</a></li>
+                        <li><a href="shop_detail.html" class="animsition-link">details</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">blog<span class="fa fa-angle-down"></span></a>
+                    <ul class="dropmenu">
+                        <li><a href="blog_boxed_masonry_3cols.html" class="animsition-link">List</a></li>
+                        <li><a href="blog_detail.html" class="animsition-link">Details</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-    <div class="row"><!--Container row-->
-
-        <div class="span8 contact"><!--Begin page content column-->
-
-            <h2>Contact Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla iaculis mattis lorem, quis gravida nunc
-                iaculis ac. Proin tristique tellus in est vulputate luctus fermentum ipsum molestie. Vivamus tincidunt
-                sem eu magna varius elementum. Maecenas felis tellus, fermentum vitae laoreet vitae, volutpat et
-                urna.</p>
-
-            <div class="alert alert-success">
-                Well done! You successfully read this important alert message.
-            </div>
-
-            <form action="/contact" method="post" id="contact-form">
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>
-                    <input class="span4" name="fullName" id="prependedInput" size="16" type="text" placeholder="Name">
-                </div>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-envelope"></i></span>
-                    <input class="span4" name="email" id="prependedInput" size="16" type="email"
-                           placeholder="Email Address">
-                </div>
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-globe"></i></span>
-                    <input class="span4" name="website" id="prependedInput" size="16" type="text"
-                           placeholder="Website URL">
-                </div>
-                <div class="textarea form-group">
-                    <textarea class="span6" name="message" id="message"
-                              placeholder="Write your message here.."></textarea>
-                </div>
-                <div class="row">
-                    <div class="span2">
-                        <input type="submit" class="btn btn-inverse" value="Send Message">
+<div class="main-wrapp">
+    <div class="container">
+        <div class="padd-80">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="second-heading">
+                        <div class="leyer-title"></div>
+                        <div class="clip">
+                            <div class="bg bg-bg-chrome" style="background-image:url(images/about_image.jpg)">
+                            </div>
+                        </div>
+                        <div class="vertical-align">
+                            <div class="second-heading-txt">
+                                <h2>Contact us</h2>
+                                <div class="separ"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
+        </div>
+        <div class="padd-80">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="subtitle">
+                        <h3>CONTACT US</h3>
+                        <p>Consectetur adipisicing elit. Autem asperiores rerum alias.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="subtitle">
+                                <h4>Get in touch</h4>
+                            </div>
+                            <p>Curabitur bibendum mi sed rhoncus aliquet. Nulla blandit porttitor justo, at posuere sem accumsan nec. Sed non arcu non sem commodo ultricies. Sed non nisi viverra, porttitor sem nec, vestibulum justo tortor ornare turpis faucibus.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="adress-block">
 
-        </div> <!--End page content column-->
+                                <h5>Email</h5>
+                                <a href="mailto:">say_hello@clover.com</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="adress-block">
 
-        <!-- Sidebar
-        ================================================== -->
-        <div class="span4 sidebar page-sidebar"><!-- Begin sidebar column -->
-            <h5 class="title-bg">Our Location</h5>
-            <address>
-                <strong>Piccolo</strong><br>
-                123 Main St, Suite 600<br>
-                San Francisco, CA 94107<br>
-                <abbr title="Phone">P:</abbr> (123) 456-7890
-            </address>
+                                <h5>Phone</h5>
+                                <a href="tel:">+38 (555) 123 9876</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="adress-block">
+                                <h5>Address</h5>
+                                <ul>
+                                    <li>244 5th Avenue. Suite 1735</li>
+                                    <li>New York, N.Y.</li>
+                                    <li>USA, 10001</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <div class="subtitle">
+                            <h4>Have a questions?</h4>
+                        </div>
+                        <form action="#" method="post" name="contactform">
+                            <input type="text" placeholder="Name*" name="name" required>
+                            <input type="email" placeholder="Email*" name="email" required>
+                            <input type="text" placeholder="Subject" name="subject">
+                            <textarea placeholder="Message"  name="message" required></textarea>
+                            <input type="submit" value="send message" name="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="map">
+    <div class="map-canvas" id="map-canvas-contact" data-lat="40.7797115" data-lng="-74.1755574" data-zoom="13" data-style="style-1">
+    </div>
+</div>
+<footer>
+    <div class="copyright">
+			<span>&copy; 2015 <b>Acerola Template</b> All right reserved.<br>
+				Template by <a href="http://freshfruits.us/">freshfruits</a></span>
+    </div>
+</footer>
 
-            <address>
-                <strong>Jimmy Doe</strong><br>
-                <a href="mailto:#">first.last@gmail.com</a>
-            </address>
-
-            <h5 class="title-bg">Map Us</h5>
-            <img src="img/location-map.jpg" alt="map">
-
-        </div><!-- End sidebar column -->
-
-    </div><!-- End container row -->
-
-{% endblock content %}
+<script src="js/jquery-2.1.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/isotope.pkgd.min.js"></script>
+<script src="js/jquery.countTo.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="js/jquery.animsition.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/idangerous.swiper.min.js"></script>
+<script src="js/all.js"></script>
+</body>
+</html>

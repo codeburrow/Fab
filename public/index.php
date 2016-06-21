@@ -9,6 +9,7 @@ $router = new Router\Router();
 
 $router->get('/', 'MainController', 'index');
 $router->get('/gallery', 'MainController', 'portfolio');
+$router->get('/contact', 'MainController', 'contact');
 
 ////See inside $router
 //echo "<pre>";
