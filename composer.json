@@ -1,0 +1,19 @@
+{
+    "name": "antony/fab",
+    "description": "A portfolio app for Fab Graphics",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antony Kalogeropoulos",
+            "email": "anthonykalogeropoulos@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fab\\": "app/"
+        }
+    }
+}

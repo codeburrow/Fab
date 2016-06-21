@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    {% block head %}
+        {{ include('head.twig') }}
+        <title> {% block title %}{% endblock %} </title>
+    {% endblock %}
+
+</head>
+<body class="home">
+
+<!-- Color Bars (above header)-->
+<div class="color-bar-1"></div>
+<div class="color-bar-2 color-bg"></div>
+
+<div class="container">
+    {{ include('nav.twig') }}
+    {% block content %} {% endblock content %}
+</div>
+
+<!-- Scroll to Top -->
+<div id="toTop" class="hidden-phone hidden-tablet">Back to Top</div>
+
+{% block footer %}
+    {{ include('footer.twig') }}
+{% endblock %}
+
+</body>
+</html>
