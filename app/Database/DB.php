@@ -21,7 +21,7 @@ class DB
      * @param string $username
      * @param string $password
      */
-    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "kourtis", $username = "homestead", $password = "secret")
+    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
     {
         $this->servername = $servername;
         $this->port = $port;
@@ -45,15 +45,27 @@ class DB
         }
     }
 
-    public function getAllPosts()
+    public function getAllItems()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM kourtis.posts");
+        $stmt = $this->conn->prepare("SELECT * FROM fab.items");
         $stmt->execute();
 
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
 
+        return $result;
+    }
+
+    public function getItem($name)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE name LIKE '%$name%'");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        
         return $result;
     }
 

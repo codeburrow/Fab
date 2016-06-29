@@ -53,9 +53,7 @@ class Router
 
             $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
 
-            var_dump($_SERVER['REQUEST_URI']);
-            echo "\n";
-            var_dump($path);
+//            var_dump($path);
 
             foreach ($this->_getUri as $key => $value)
             {
@@ -66,7 +64,7 @@ class Router
                     //Find parameter if passed
                     $parts = explode('/', $path);
                     count($parts) > 2 ? $parameter=$parts[2] : $parameter=null;
-                    
+
                     //Instantiate Controller
                     $controller = 'Fab\Controllers\\' . $this->_getController[$key];
                     $controller = new $controller($parameter);

@@ -12,9 +12,8 @@ $router->get('/portfolio', 'MainController', 'portfolio');
 $router->get('/portfolio/[\w\d]+', 'MainController', 'single_item');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
-$router->get('/single_item', 'MainController', 'single_item');
 
-$router->get('/test/testt', 'MainController', 'test');
+$router->get('/test', 'ItemsController', 'showAllItems');
 
 ////See inside $router
 //echo "<pre>";

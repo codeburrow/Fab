@@ -1,6 +1,8 @@
 <?php
 namespace Fab\Controllers;
 
+use Fab\Database\DB;
+
 class MainController extends Controller
 {
 
@@ -31,16 +33,12 @@ class MainController extends Controller
 
     public function single_item()
     {
-        if ( $this->item == null )
-        {
-            echo "It's null!";
-        } else {
+        $DB = new DB();
 
-            $item = $this->item;
+        $item = $DB->getItem($this->item);
+        $item = $item[0];
 
-            echo $this->twig->render('single_item.twig', array('item' => $item));
-        }
-        
+        echo $this->twig->render('single_item.twig', array('item' => $item));
     }
 
     public function test()

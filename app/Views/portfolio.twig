@@ -20,12 +20,16 @@
             <div class="row">
                 <div class="izotope-container gutt-col3 sliphover">
                     <div class="grid-sizer"></div>
-                    <div class="item branding">
-                        <a href="/single_item"></a>
-                        <div class="det-img ellem" data-caption="<a href='single_item' class='sleep-title'><span class='vertical-align'><h4>project title</h4><span class='pr-sutitle'>aspernatur sit ratione</span></span></a>">
-                            <img src="images/masonry_col2_1.jpg" alt="">
+
+                    {% for item in items %}
+                        <div class="item {{ item.tag }}">
+                            <a href="/portfolio/{{ item.name }}"></a>
+                            <div class="det-img ellem" data-caption="<a href='/portfolio/{{ item.name }}' class='sleep-title'><span class='vertical-align'><h4>{{ item.title }}</h4><span class='pr-sutitle'>{{ item.subtitle }}</span></span></a>">
+                                <img src="images/{{ item.image|e }}" alt="">
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
+                    
                     <div class="item web photo">
                         <a href="/single_item"></a>
                         <div class="det-img ellem" data-caption="<a href='single_item' class='sleep-title'><span class='vertical-align'><h4>project title</h4><span class='pr-sutitle'>aspernatur sit ratione</span></span></a>">
