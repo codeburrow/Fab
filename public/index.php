@@ -11,6 +11,7 @@ $router->get('/', 'MainController', 'index');
 $router->get('/portfolio', 'MainController', 'portfolio');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
+$router->get('/single_item', 'MainController', 'single_item');
 
 ////See inside $router
 //echo "<pre>";

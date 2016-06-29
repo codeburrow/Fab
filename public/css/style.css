@@ -3201,3 +3201,21 @@ html.w-mod-js *[data-ix="cart-hide"] {
     font-weight: 300;
     font-family: 'Roboto Slab', serif;
 }
+
+.right-arrow-nav span {
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 100px;
+    position: relative;
+    float: right;
+}
+
+.left-arrow-nav span {
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 100px;
+    position: relative;
+    float: left;
+}

@@ -28,5 +28,9 @@ class MainController extends Controller
     {
         echo $this->twig->render('contact.twig');
     }
-    
+
+    public function single_item()
+    {
+        echo $this->twig->render('single_item.twig');
+    }
 }
