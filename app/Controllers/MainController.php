@@ -4,9 +4,9 @@ namespace Fab\Controllers;
 class MainController extends Controller
 {
 
-    public function __construct()
+    public function __construct($item)
     {
-        parent::__construct();
+        parent::__construct($item);
     }
 
     public function index()
@@ -31,6 +31,21 @@ class MainController extends Controller
 
     public function single_item()
     {
-        echo $this->twig->render('single_item.twig');
+        if ( $this->item == null )
+        {
+            echo "It's null!";
+        } else {
+
+            $item = $this->item;
+
+            echo $this->twig->render('single_item.twig', array('item' => $item));
+        }
+        
     }
+
+    public function test()
+    {
+        
+    }
+
 }
