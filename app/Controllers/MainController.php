@@ -31,16 +31,6 @@ class MainController extends Controller
         echo $this->twig->render('contact.twig');
     }
 
-    public function single_item()
-    {
-        $DB = new DB();
-
-        $item = $DB->getItem($this->item);
-        $item = $item[0];
-
-        echo $this->twig->render('single_item.twig', array('item' => $item));
-    }
-
     public function test()
     {
         

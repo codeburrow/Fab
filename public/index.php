@@ -8,12 +8,12 @@ use Fab\Router;
 $router = new Router\Router();
 
 $router->get('/', 'MainController', 'index');
-$router->get('/portfolio', 'MainController', 'portfolio');
-$router->get('/portfolio/[\w\d]+', 'MainController', 'single_item');
+$router->get('/portfolio', 'ItemsController', 'showAllItems');
+$router->get('/portfolio/[\w\d]+', 'ItemsController', 'single_item');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
 
-$router->get('/test', 'ItemsController', 'showAllItems');
+//$router->get('/test', 'ItemsController', 'showAllItems');
 
 ////See inside $router
 //echo "<pre>";

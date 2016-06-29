@@ -5,9 +5,9 @@ use Fab\Database\DB;
 
 class ItemsController extends Controller
 {
-    public function __construct()
+    public function __construct($item)
     {
-        parent::__construct();
+        parent::__construct($item);
     }
 
     public function showAllItems()
@@ -17,7 +17,16 @@ class ItemsController extends Controller
         $items = $myDB->getAllItems();
 
         echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
+    }
 
+    public function single_item()
+    {
+        $DB = new DB();
+
+        $item = $DB->getItem($this->item);
+        $item = $item[0];
+
+        echo $this->twig->render('single_item.twig', array('item' => $item));
     }
 
 }
