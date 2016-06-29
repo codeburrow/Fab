@@ -51,13 +51,14 @@ class Router
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
+            $found = 0;
+
             $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
 
-//            var_dump($path);
-
+            //Map URL to page
             foreach ($this->_getUri as $key => $value)
             {
-                if (preg_match("#^$value$#", $path))
+                if ( $found = preg_match("#^$value$#", $path) )
                 {
 //                    echo $key . ' => ' . $value; //See what the $path returns
 
@@ -72,8 +73,25 @@ class Router
                     //Call the appropriate method
                     $method = $this->_getMethod[$key];
                     $controller->$method();
+
+                    break;
                 }
             }
+
+            //Show 404 page
+            if ( $found == 0 )
+            {
+                //Instantiate Controller
+                $controller = 'Fab\Controllers\MainController';
+                $controller = new $controller();
+
+                //Call the appropriate method
+                $method = 'error404';
+                $controller->$method();
+
+                die();
+            }
+
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
