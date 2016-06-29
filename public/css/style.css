@@ -3154,8 +3154,9 @@ html.w-mod-js *[data-ix="cart-hide"] {
 }
 
 .contact-form input[type="submit"]:hover {
-    background: #999;
+    background: #f7f7f7;
     color: #222222;
+    border: solid 1px black;
 }
 
 .adress-block {
@@ -3177,6 +3178,7 @@ html.w-mod-js *[data-ix="cart-hide"] {
     font-weight: 300;
     text-decoration: none;
     font-family: 'Roboto Slab', serif;
+    text-align: center;
 }
 
 .adress-block a:hover {

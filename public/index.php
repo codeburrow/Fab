@@ -9,6 +9,7 @@ $router = new Router\Router();
 
 $router->get('/', 'MainController', 'index');
 $router->get('/portfolio', 'MainController', 'portfolio');
+$router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
 
 ////See inside $router
