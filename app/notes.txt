@@ -2,3 +2,7 @@ Templates:
 1) Landing page --> http://3nacu.com/milano-template/architecture.html
 2) Gallery page --> http://3nacu.com/milano-template/onepage.html
 3) Gallery page --> http://template.themeton.com/acerola/
+
+Images:
+1) The higher the resolution the better.
+2) Smaller than 400 x 250 resolution will not display nicely.

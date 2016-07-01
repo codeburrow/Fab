@@ -6,11 +6,14 @@ use Twig_Loader_Filesystem;
 
 class Controller
 {
+
     protected $twig;
     protected $item;
 
     public function __construct( $item=null )
     {
+        define('CSS_PATH', 'http://fab.app/public/css/');
+        
         $this->item = $item;
         
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Views/');

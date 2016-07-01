@@ -13,7 +13,7 @@ class MainController extends Controller
 
     public function index()
     {
-        echo $this->twig->render('index.twig');
+        echo $this->twig->render('index.twig', array('CSS_PATH' => CSS_PATH));
     }
 
     public function portfolio()
