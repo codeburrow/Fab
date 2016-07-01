@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    {{ include('head.twig') }}
+    <title> Fab | Dashboard </title>
+</head>
+<body class="nav-md">
+
+<div class="container body">
+    <div class="main_container">
+
+        {{ include('sidebar-nav.twig') }}
+        {{ include('top-nav.twig') }}
+        {% block content %} {% endblock content %}
+
+
+        {% block footer %}
+            {{ include('footer.twig') }}
+        {% endblock %}
+
+    </div>
+</div>
+
+{{ include('scripts.twig') }}
+
+</body>
+</html>
