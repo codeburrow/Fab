@@ -6,7 +6,6 @@ use Twig_Loader_Filesystem;
 
 class Controller
 {
-
     protected $twig;
     protected $item;
 

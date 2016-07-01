@@ -12,6 +12,7 @@ $router->get('/portfolio', 'ItemsController', 'showAllItems');
 $router->get('/portfolio/[\w\d]+', 'ItemsController', 'single_item');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
+$router->get('/admin/dashboard', 'AdminController', 'index');
 
 //$router->get('/test', 'ItemsController', 'showAllItems');
 
