@@ -12,7 +12,8 @@ class Controller
 
     public function __construct( $item=null )
     {
-        define('CSS_PATH', 'http://fab.app/public/css/');
+        //Environment Variable
+        //define('CSS_PATH', 'http://fab.app/public/css/');
         
         $this->item = $item;
         
