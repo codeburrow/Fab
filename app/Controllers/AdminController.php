@@ -42,11 +42,10 @@ class AdminController extends Controller
         $uploadError = $uploadImageService->uploadImage();
         if ( empty($uploadError) ){
 
-            //ToDo: File Size should be bigger than it is right now
-
             //Add row to db
             $nameOfImage = $_FILES['image']['name'];
             $result = $DB->addItem($_POST, $nameOfImage);
+
             if( empty($result) ){ //successfully added row
                 $flashMessage = "Item Succesfully Added";
                 $success = true;
@@ -55,10 +54,10 @@ class AdminController extends Controller
                 //Delete uploaded image from server
                 unlink("images/$nameOfImage");
             }
+
         } else { //image failed to upload
             $flashMessage = $uploadError . "\nError: Could not upload image.";
         }
-
 
         echo $this->twig->render('addItem.twig', array('flashMessage'=>$flashMessage, 'success'=>$success));
     }
