@@ -1,3 +1,10 @@
 #dashboard-logo {
     background-color: #777777;
 }
+
+
+.btn-default.active, .btn-default:active, .open > .dropdown-toggle.btn-default {
+    color: #333;
+    background-color: lightblue;
+    border-color: #adadad;
+}

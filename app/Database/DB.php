@@ -57,15 +57,36 @@ class DB
         return $result;
     }
 
-    public function getItem($name)
+    public function getItem($urlName)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE name LIKE '%$name%'");
+        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE '%$urlName%'");
         $stmt->execute();
 
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
         
+        return $result;
+    }
+
+    public function addItem($data, $imageName)
+    {
+        $tags = "";
+        if ($tags != null)
+        foreach ($data['tags'] as $tag){
+            $tags .= $tag . ' ';
+        }
+
+        $stmt = $this->conn->prepare( "INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`)
+    VALUES (:image, :description, :title, :subtitle, :urlName, :tags)" );
+        $stmt->bindParam(':image', $imageName);
+        $stmt->bindParam(':description', $data['description']);
+        $stmt->bindParam(':title', $data['title']);
+        $stmt->bindParam(':subtitle', $data['subtitle']);
+        $stmt->bindParam(':urlName', $data['urlName']);
+        $stmt->bindParam(':tags', $tags);
+        $result = $stmt->execute();
+
         return $result;
     }
 

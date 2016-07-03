@@ -24,6 +24,7 @@ class ItemsController extends Controller
         $DB = new DB();
 
         $item = $DB->getItem($this->item);
+        //ToDo: What if there is no $item[0]?
         $item = $item[0];
 
         echo $this->twig->render('single_item.twig', array('item' => $item));

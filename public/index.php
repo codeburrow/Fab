@@ -13,6 +13,9 @@ $router->get('/portfolio/[\w\d]+', 'ItemsController', 'single_item');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
 $router->get('/admin/dashboard', 'AdminController', 'index');
+$router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
+
+$router->post('/admin/addItem', 'AdminController', 'postAddItem');
 
 //$router->get('/test', 'ItemsController', 'showAllItems');
 

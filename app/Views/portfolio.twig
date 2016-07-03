@@ -21,10 +21,10 @@
                         <div class="grid-sizer"></div>
 
                         {% for item in items %}
-                            <div class="item {{ item.tag|e }}">
-                                <a href="/portfolio/{{ item.name|e }}"></a>
+                            <div class="item {{ item.tags|e }}">
+                                <a href="/portfolio/{{ item.urlName|e }}"></a>
                                 <div class="det-img ellem"
-                                     data-caption="<a href='/portfolio/{{ item.name|e }}' class='sleep-title'><span class='vertical-align'><h4>{{ item.title|e }}</h4><span class='pr-sutitle'>{{ item.subtitle|e }}</span></span></a>">
+                                     data-caption="<a href='/portfolio/{{ item.urlName|e }}' class='sleep-title'><span class='vertical-align'><h4>{{ item.title|e }}</h4><span class='pr-sutitle'>{{ item.subtitle|e }}</span></span></a>">
                                     <img src="images/{{ item.image|e }}" alt="">
                                 </div>
                             </div>

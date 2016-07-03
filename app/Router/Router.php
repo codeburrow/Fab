@@ -48,10 +48,9 @@ class Router
 
     public function submit()
     {
+        $found = 0;
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-            $found = 0;
 
             $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
 
@@ -98,18 +97,38 @@ class Router
 
             foreach ($this->_postUri as $key => $value)
             {
-                if (preg_match("#^$value$#", $path))
+                if ( $found = preg_match("#^$value$#", $path))
                 {
-                    //echo $key . ' => ' . $value; //See what the $path returns
+//                    echo $key . ' => ' . $value; //See what the $path returns
+
+                    //Find parameter if passed
+                    $parts = explode('/', $path);
+                    count($parts) > 2 ? $parameter=$parts[2] : $parameter=null;
 
                     //Instantiate Controller
                     $controller = 'Fab\Controllers\\' . $this->_postController[$key];
-                    $controller = new $controller();
+                    $controller = new $controller($parameter);
 
                     //Call the appropriate method
                     $method = $this->_postMethod[$key];
                     $controller->$method();
+
+                    break;
                 }
+            }
+
+            //Show 404 page
+            if ( $found == 0 )
+            {
+                //Instantiate Controller
+                $controller = 'Fab\Controllers\MainController';
+                $controller = new $controller();
+
+                //Call the appropriate method
+                $method = 'error404';
+                $controller->$method();
+
+                die();
             }
         }
 
