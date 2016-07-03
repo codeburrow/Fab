@@ -36,26 +36,31 @@ class AdminController extends Controller
     {
         $DB = new DB();
         $uploadImageService = new UploadImage();
-        $result = false;
+        $success = false;
 
+        //Try to upload image
         $uploadError = $uploadImageService->uploadImage();
-        if ( $uploadError == ""){
+        if ( empty($uploadError) ){
 
-            //ToDo: Add Exception when try to put as urlName invalid characters.
-            //ToDo: File Size whould be bigger than it is right now
+            //ToDo: File Size should be bigger than it is right now
 
-            $result = $DB->addItem($_POST, $_FILES['image']['name']);
-            if( $result == TRUE){
+            //Add row to db
+            $nameOfImage = $_FILES['image']['name'];
+            $result = $DB->addItem($_POST, $nameOfImage);
+            if( empty($result) ){ //successfully added row
                 $flashMessage = "Item Succesfully Added";
-            } else {
+                $success = true;
+            } else { //failed to add row
                 $flashMessage = "Error: Could not add item. Please check the values you have given.";
+                //Delete uploaded image from server
+                unlink("images/$nameOfImage");
             }
-        } else {
+        } else { //image failed to upload
             $flashMessage = $uploadError . "\nError: Could not upload image.";
         }
 
 
-        echo $this->twig->render('addItem.twig', array('flashMessage'=>$flashMessage, 'result'=>$result));
+        echo $this->twig->render('addItem.twig', array('flashMessage'=>$flashMessage, 'success'=>$success));
     }
 
 }

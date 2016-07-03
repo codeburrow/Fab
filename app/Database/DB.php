@@ -71,23 +71,30 @@ class DB
 
     public function addItem($data, $imageName)
     {
-        $tags = "";
-        if ($tags != null)
-        foreach ($data['tags'] as $tag){
-            $tags .= $tag . ' ';
+        if ( preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName']) ) {
+
+            $tags = "";
+            if ($tags != null)
+                foreach ($data['tags'] as $tag) {
+                    $tags .= $tag . ' ';
+                }
+
+            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`)
+    VALUES (:image, :description, :title, :subtitle, :urlName, :tags)");
+            $stmt->bindParam(':image', $imageName);
+            $stmt->bindParam(':description', $data['description']);
+            $stmt->bindParam(':title', $data['title']);
+            $stmt->bindParam(':subtitle', $data['subtitle']);
+            $stmt->bindParam(':urlName', $data['urlName']);
+            $stmt->bindParam(':tags', $tags);
+            $result = $stmt->execute();
+
+            return $result = $result == true ? $result = "" : $result = "Error inserting into database.";
+        } else {
+            $errorMessage = "Only letters and numbers allowed in the URL name";
+            
+            return $errorMessage;
         }
-
-        $stmt = $this->conn->prepare( "INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`)
-    VALUES (:image, :description, :title, :subtitle, :urlName, :tags)" );
-        $stmt->bindParam(':image', $imageName);
-        $stmt->bindParam(':description', $data['description']);
-        $stmt->bindParam(':title', $data['title']);
-        $stmt->bindParam(':subtitle', $data['subtitle']);
-        $stmt->bindParam(':urlName', $data['urlName']);
-        $stmt->bindParam(':tags', $tags);
-        $result = $stmt->execute();
-
-        return $result;
     }
 
     public function getCarouselPosts()
