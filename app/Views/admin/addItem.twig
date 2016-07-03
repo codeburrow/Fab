@@ -86,9 +86,11 @@
                                                 class="required">*</span>
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <label class="btn btn-default btn-file">
-                                            Browse <input type="file" name="image" id="image" style="display: none;">
+                                        <label class="btn btn-default btn-primary btn-file">
+                                            <input type="file" name="image" id="image" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
+                                            Browse
                                         </label>
+                                        <span class='label label-info' id="upload-file-info"></span>
                                     </div>
                                 </div>
                                 <div class="ln_solid"></div>
