@@ -14,6 +14,7 @@ $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
 $router->get('/admin/dashboard', 'AdminController', 'index');
 $router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
+$router->get('/admin/dashboard/deleteItem', 'AdminController', 'deleteItem');
 
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
 

@@ -62,4 +62,9 @@ class AdminController extends Controller
         echo $this->twig->render('addItem.twig', array('flashMessage'=>$flashMessage, 'success'=>$success));
     }
 
+    public function deleteItem()
+    {
+        echo $this->twig->render('deleteItem.twig');
+    }
+
 }

@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    {{ include('head.twig') }}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Fab | Dashboard </title>
+    {{ include('head.twig') }}
 </head>
 <body class="nav-md">
 
@@ -12,11 +17,7 @@
         {{ include('sidebar-nav.twig') }}
         {{ include('top-nav.twig') }}
         {% block content %} {% endblock content %}
-
-
-        {% block footer %}
-            {{ include('footer.twig') }}
-        {% endblock %}
+        {{ include('footer.twig') }}
 
     </div>
 </div>
