@@ -17,6 +17,7 @@ $router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
 $router->get('/admin/dashboard/deleteItem', 'AdminController', 'deleteItem');
 
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
+$router->post('/admin/deleteItem', 'AdminController', 'postDeleteItem');
 
 //$router->get('/test', 'ItemsController', 'showAllItems');
 

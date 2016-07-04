@@ -65,13 +65,13 @@ class DB
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
-        
+
         return $result;
     }
 
     public function addItem($data, $imageName)
     {
-        if ( preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName']) ) {
+        if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
 
             $tags = "";
             if ($data['tags'] != null)
@@ -92,7 +92,7 @@ class DB
             return $result = $result == true ? $result = "" : $result = "Error inserting into database.";
         } else {
             $errorMessage = "Only letters and numbers allowed in the URL name";
-            
+
             return $errorMessage;
         }
     }
@@ -120,6 +120,53 @@ class DB
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function deleteItems($data)
+    {
+        if (isset($data['items'])) {
+            $items = $data['items'];
+
+            foreach ($items as $item => $id) {
+
+                //Get the image for the current item so that we delete it from server
+                $getNameOfImage = $this->conn->prepare("SELECT image 
+      FROM fab.items WHERE id = :id");
+                $getNameOfImage->bindParam(':id', $id);
+                $getNameOfImage->execute();
+
+                // set the resulting array to associative
+                $getNameOfImage->setFetchMode(PDO::FETCH_ASSOC);
+                $arrayWithNameOfImage = $getNameOfImage->fetchAll();
+//                var_dump($arrayWithNameOfImage);
+
+                //Delete uploaded image from server
+                $nameOfImage = $arrayWithNameOfImage[0]['image'];
+//                var_dump("Image: " . $nameOfImage);
+                $resultRemoveImage = unlink("images/$nameOfImage");
+                if ($resultRemoveImage == false){
+                    $result = 3; //Image was not removed from server
+                    break;
+                }
+
+                //Delete row from db
+                $stmt = $this->conn->prepare("DELETE FROM fab.items
+WHERE id=:id ;");
+                $stmt->bindParam(':id', $id);
+                $stmt->execute();
+
+                if ($stmt == true) {
+                    $result = 0; //all good
+                } else {
+                    $result = 2; //sth went wrong
+                    break;
+                }
+            }
+        } else {
+            $result = 1; //No items selected in form
+        }
 
         return $result;
     }

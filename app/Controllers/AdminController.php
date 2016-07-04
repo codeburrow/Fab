@@ -74,4 +74,31 @@ class AdminController extends Controller
         echo $this->twig->render('deleteItem.twig', array('items'=>$items));
     }
 
+    public function postDeleteItem()
+    {
+        $myDB = new DB();
+
+        $result = $myDB->deleteItems($_POST);
+
+        if ($result == 0){
+            $message = "Success! Items Deleted.";
+        } elseif ($result == 1) {
+            $message = "Failure. You did not select any items!";
+        } elseif ($result == 2) {
+            $message = "Failure. Something went wrong. Please try again.";
+        } elseif ($result == 3) {
+            $message = "Failure. Could not remove image. Make sure you selected a valid item.";
+        }
+
+        $items = $myDB->getAllItems();
+
+        echo $this->twig->render('deleteItem.twig', array('items'=>$items, 'result'=>$result, 'message'=>$message));
+
+        
+        
+        
+        
+        
+    }
+
 }
