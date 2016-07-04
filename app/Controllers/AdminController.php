@@ -9,6 +9,7 @@ namespace Fab\Controllers;
 
 use Fab\Database\DB;
 use Twig_Environment;
+use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
 use Fab\Services\UploadImage;
 
@@ -19,7 +20,10 @@ class AdminController extends Controller
         parent::__construct($item = null);
 
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Views/admin');
-        $this->twig = new Twig_Environment($loader);
+        $this->twig = new Twig_Environment($loader, array(
+            'debug' => true
+        ));
+        $this->twig->addExtension(new Twig_Extension_Debug());
     }
 
     public function index()
@@ -64,7 +68,10 @@ class AdminController extends Controller
 
     public function deleteItem()
     {
-        echo $this->twig->render('deleteItem.twig');
+        $myDB = new DB();
+        $items = $myDB->getAllItems();
+
+        echo $this->twig->render('deleteItem.twig', array('items'=>$items));
     }
 
 }

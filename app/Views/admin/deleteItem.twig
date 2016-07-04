@@ -6,9 +6,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Delete Item
-                        <small>from portfolio page</small>
-                    </h3>
+                    <h3>Delete Item <small> from portfolio page</small></h3>
                 </div>
             </div>
 
@@ -25,196 +23,144 @@
                             </ul>
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="x_content">
 
-                            {#<?php if (isset($successDelete['message'])) : ?>#}
-                            {#<h3 style='color:forestgreen;'><?= $this->e($successDelete['message']) ?></h3>#}
-                            {#<?php endif ?>#}
-                            <form action="/admin/deleteItem" method="post">
-                                <table id="datatable"
-                                       class="table table-striped table-bordered responsive-utilities jambo_table">
-                                    <thead>
-                                    <tr class="headings">
-                                        <th
-                                                class="column-title">Check
-                                        </th>
-                                        <th class="column-title">ID</th>
-                                        <th class="column-title">URL Name</th>
-                                        <th class="column-title">Title</th>
-                                        <th class="column-title">Tags</th>
-                                        <th class="column-title no-link last"><span class="nobr">Image</span>
-                                        </th>
-                                    </tr>
-                                    </thead>
+                            <table id="datatable" class="table table-striped table-bordered responsive-utilities jambo_table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                                </thead>
 
-                                    <tbody>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">System Architect</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">System Architect</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">System Architect</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">System Architect</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="even pointer">
-                                        <td class="a-center ">
-                                            <input type="checkbox" name="selections[]" class="flat">
-                                        </td>
-                                        <td class=" ">Programmer</td>
-                                        <td class=" ">Edinburgh</td>
-                                        <td class=" ">61</td>
-                                        <td class="a-right a-right ">2011/04/25</td>
-                                        <td class="last">
-                                            <button id="individual_btn" class="btn btn-danger" type="submit"
-                                                    name="individual_btn" value="Last One"><i
-                                                        class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                                <div class="form-group-lg" style="margin: 10px auto;">
-                                    <button style="margin: 30px auto;" type="submit" name="multiple_btn"
-                                            class="btn btn-danger btn-block pull-left">Delete Selected Entries
-                                    </button>
-                                </div>
-
-                            </form>
+                                <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009/01/12</td>
+                                    <td>$86,000</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Senior Javascript Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2012/03/29</td>
+                                    <td>$433,060</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>33</td>
+                                    <td>2008/11/28</td>
+                                    <td>$162,700</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Integration Specialist</td>
+                                    <td>New York</td>
+                                    <td>61</td>
+                                    <td>2012/12/02</td>
+                                    <td>$372,000</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Sales Assistant</td>
+                                    <td>San Francisco</td>
+                                    <td>59</td>
+                                    <td>2012/08/06</td>
+                                    <td>$137,500</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Integration Specialist</td>
+                                    <td>Tokyo</td>
+                                    <td>55</td>
+                                    <td>2010/10/14</td>
+                                    <td>$327,900</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>$205,500</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" ></td>
+                                    <td>Software Engineer</td>
+                                    <td>Edinburgh</td>
+                                    <td>23</td>
+                                    <td>2008/12/13</td>
+                                    <td>$103,600</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Office Manager</td>
+                                    <td>London</td>
+                                    <td>30</td>
+                                    <td>2008/12/19</td>
+                                    <td>$90,560</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Support Lead</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2013/03/03</td>
+                                    <td>$342,000</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Regional Director</td>
+                                    <td>San Francisco</td>
+                                    <td>36</td>
+                                    <td>2008/10/16</td>
+                                    <td>$470,600</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Senior Marketing Designer</td>
+                                    <td>London</td>
+                                    <td>43</td>
+                                    <td>2012/12/18</td>
+                                    <td>$313,500</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>Regional Director</td>
+                                    <td>London</td>
+                                    <td>19</td>
+                                    <td>2010/03/17</td>
+                                    <td>$385,750</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-
                     </div>
                 </div>
 
