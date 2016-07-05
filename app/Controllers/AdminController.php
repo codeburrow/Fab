@@ -93,12 +93,25 @@ class AdminController extends Controller
         $items = $myDB->getAllItems();
 
         echo $this->twig->render('deleteItem.twig', array('items'=>$items, 'result'=>$result, 'message'=>$message));
+    }
+    
+    public function editItem()
+    {
+        $myDB = new DB();
+        
+        $items = $myDB->getAllItems();
+        
+        echo $this->twig->render('editItem.twig', array('items'=>$items));
+    }
 
-        
-        
-        
-        
-        
+    public function postEditItem()
+    {
+        $myDB = new DB();
+        $result = $myDB->editItems($_POST);
+
+        $items = $myDB->getAllItems();
+
+        echo $this->twig->render('editItem.twig', array('items'=>$items, 'result'=>$result));
     }
 
 }
