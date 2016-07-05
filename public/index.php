@@ -16,7 +16,7 @@ $router->get('/admin/dashboard', 'AdminController', 'index');
 $router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
 $router->get('/admin/dashboard/deleteItem', 'AdminController', 'deleteItem');
 $router->get('/admin/dashboard/editItem', 'AdminController', 'editItem');
-$router->get('/admin/dashboard/emailSupport', 'AdminController', 'emailSupport');
+$router->get('/admin/dashboard/contactSupport', 'AdminController', 'contactSupport');
 
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
 $router->post('/admin/deleteItem', 'AdminController', 'postDeleteItem');
