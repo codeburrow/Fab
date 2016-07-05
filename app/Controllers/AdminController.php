@@ -114,4 +114,9 @@ class AdminController extends Controller
         echo $this->twig->render('editItem.twig', array('items'=>$items, 'result'=>$result));
     }
 
+    public function emailSupport()
+    {
+        echo $this->twig->render('emailSupport.twig');
+    }
+
 }
