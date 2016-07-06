@@ -59,7 +59,8 @@ class DB
 
     public function getItem($urlName)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE '%$urlName%'");
+        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE :urlName");
+        $stmt->bindParam(':urlName', $urlName);
         $stmt->execute();
 
         // set the resulting array to associative
