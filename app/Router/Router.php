@@ -51,8 +51,12 @@ class Router
         $found = 0;
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
 
-        //If last char in URL is '/' redirect without it
-        if ( $path[strlen($path)-1] === '/') {
+        /**
+         * If last char in URL is '/' redirect without it
+         * and also check if url is root '/' because this would result
+         * in infinite loop
+         */
+        if ( ($path[strlen($path)-1] === '/') && !($path === '/') ) { //
             $newPath = substr($path, 0, -1);
             header("Location: $newPath", true, 302);
             exit;
