@@ -49,10 +49,16 @@ class Router
     public function submit()
     {
         $found = 0;
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
+
+        //If last char in URL is '/' redirect without it
+        if ( $path[strlen($path)-1] === '/') {
+            $newPath = substr($path, 0, -1);
+            header("Location: $newPath", true, 302);
+            exit;
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-            $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
 
             //Map URL to page
             foreach ($this->_getUri as $key => $value)
@@ -92,9 +98,6 @@ class Router
             }
 
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); //get the url
-
             foreach ($this->_postUri as $key => $value)
             {
                 if ( $found = preg_match("#^$value$#", $path))
