@@ -8,6 +8,7 @@
 namespace Fab\Controllers;
 
 use Fab\Database\DB;
+use Fab\Models\User;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
@@ -117,6 +118,26 @@ class AdminController extends Controller
     public function contactSupport()
     {
         echo $this->twig->render('contactSupport.twig');
+    }
+
+    public function login()
+    {
+        echo $this->twig->render('login.twig');
+    }
+
+    public function postLogin()
+    {
+        $user = $_POST;
+
+        $user = new User($user['username'], $user['password']);
+
+        $loginSuccessMessage = $user->isAdmin();
+
+        if ( empty($loginSuccessMessage) ) {
+            echo $this->twig->render('dashboard.twig');
+        } else {
+            echo $this->twig->render('login.twig', array('errorMessage'=>$loginSuccessMessage));
+        }
     }
 
 }

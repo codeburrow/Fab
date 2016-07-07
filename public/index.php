@@ -17,10 +17,12 @@ $router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
 $router->get('/admin/dashboard/deleteItem', 'AdminController', 'deleteItem');
 $router->get('/admin/dashboard/editItem', 'AdminController', 'editItem');
 $router->get('/admin/dashboard/contactSupport', 'AdminController', 'contactSupport');
+$router->get('/admin/login', 'AdminController', 'login');
 
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
 $router->post('/admin/deleteItem', 'AdminController', 'postDeleteItem');
 $router->post('/admin/editItem', 'AdminController', 'postEditItem');
+$router->post('/admin/login', 'AdminController', 'postLogin');
 
 //$router->get('/test', 'ItemsController', 'showAllItems');
 
