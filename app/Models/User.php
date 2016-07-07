@@ -24,6 +24,30 @@ class User
         $this->identifyUser($username, $password);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
     public function identifyUser($username, $password)
     {
         $user = $this->myDB->getUser($username, $password);
@@ -41,7 +65,7 @@ class User
     
     public function isAdmin()
     {        
-        if ( $this->isAdmin === '1' ){
+        if ( $this->getIsAdmin() === '1' ){
             return "";
         } elseif ( is_null($this->isAdmin) ) {
             return "The credentials you entered are wrong";

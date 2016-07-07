@@ -29,14 +29,22 @@ class AdminController extends Controller
 
     public function index()
     {
-        echo $this->twig->render('dashboard.twig');
+        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+            echo $this->twig->render('dashboard.twig');
+        } else {
+            echo $this->twig->render('login.twig');
+        }
     }
 
     public function addItem()
     {
-        echo $this->twig->render('addItem.twig');
+        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+            echo $this->twig->render('addItem.twig');
+        } else {
+            echo $this->twig->render('login.twig');
+        }
     }
-    
+
     public function postAddItem()
     {
         $DB = new DB();
@@ -45,13 +53,13 @@ class AdminController extends Controller
 
         //Try to upload image
         $uploadError = $uploadImageService->uploadImage();
-        if ( empty($uploadError) ){
+        if (empty($uploadError)) {
 
             //Add row to db
             $nameOfImage = $_FILES['image']['name'];
             $result = $DB->addItem($_POST, $nameOfImage);
 
-            if( empty($result) ){ //successfully added row
+            if (empty($result)) { //successfully added row
                 $flashMessage = "Item Succesfully Added";
                 $success = true;
             } else { //failed to add row
@@ -64,15 +72,19 @@ class AdminController extends Controller
             $flashMessage = $uploadError . "\nError: Could not upload image.";
         }
 
-        echo $this->twig->render('addItem.twig', array('flashMessage'=>$flashMessage, 'success'=>$success));
+        echo $this->twig->render('addItem.twig', array('flashMessage' => $flashMessage, 'success' => $success));
     }
 
     public function deleteItem()
     {
-        $myDB = new DB();
-        $items = $myDB->getAllItems();
+        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+            $myDB = new DB();
+            $items = $myDB->getAllItems();
 
-        echo $this->twig->render('deleteItem.twig', array('items'=>$items));
+            echo $this->twig->render('deleteItem.twig', array('items' => $items));        } else {
+            echo $this->twig->render('login.twig');
+        }
+
     }
 
     public function postDeleteItem()
@@ -81,7 +93,7 @@ class AdminController extends Controller
 
         $result = $myDB->deleteItems($_POST);
 
-        if ($result == 0){
+        if ($result == 0) {
             $message = "Success! Items Deleted.";
         } elseif ($result == 1) {
             $message = "Failure. You did not select any items!";
@@ -93,16 +105,19 @@ class AdminController extends Controller
 
         $items = $myDB->getAllItems();
 
-        echo $this->twig->render('deleteItem.twig', array('items'=>$items, 'result'=>$result, 'message'=>$message));
+        echo $this->twig->render('deleteItem.twig', array('items' => $items, 'result' => $result, 'message' => $message));
     }
-    
+
     public function editItem()
     {
-        $myDB = new DB();
-        
-        $items = $myDB->getAllItems();
-        
-        echo $this->twig->render('editItem.twig', array('items'=>$items));
+        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+            $myDB = new DB();
+            $items = $myDB->getAllItems();
+
+            echo $this->twig->render('editItem.twig', array('items' => $items));
+        } else {
+            echo $this->twig->render('login.twig');
+        }
     }
 
     public function postEditItem()
@@ -112,12 +127,16 @@ class AdminController extends Controller
 
         $items = $myDB->getAllItems();
 
-        echo $this->twig->render('editItem.twig', array('items'=>$items, 'result'=>$result));
+        echo $this->twig->render('editItem.twig', array('items' => $items, 'result' => $result));
     }
 
     public function contactSupport()
     {
-        echo $this->twig->render('contactSupport.twig');
+        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+            echo $this->twig->render('contactSupport.twig');
+        } else {
+            echo $this->twig->render('login.twig');
+        }
     }
 
     public function login()
@@ -129,15 +148,54 @@ class AdminController extends Controller
     {
         $user = $_POST;
 
-        $user = new User($user['username'], $user['password']);
+        $user = new User($user['username'], $user['password']); //find the user from db
 
-        $loginSuccessMessage = $user->isAdmin();
+        $loginSuccessMessage = $user->isAdmin(); //authenticate user
 
-        if ( empty($loginSuccessMessage) ) {
+        if (empty($loginSuccessMessage)) { //if authentication successful
+
+            //Start $_SESSION
+            $status = session_status();
+            if ($status == PHP_SESSION_NONE) {
+                //There is no active session
+                session_start();
+            } elseif ($status == PHP_SESSION_DISABLED) {
+                //Sessions are not available
+            } elseif ($status == PHP_SESSION_ACTIVE) {
+                //Destroy current and start new one
+                session_destroy();
+                session_start();
+            }
+
+            //Set $_SESSION variables
+            $_SESSION['user'] = $user->getUsername();
+            $_SESSION['isAdmin'] = $user->getIsAdmin();
+
             echo $this->twig->render('dashboard.twig');
         } else {
-            echo $this->twig->render('login.twig', array('errorMessage'=>$loginSuccessMessage));
+            echo $this->twig->render('login.twig', array('errorMessage' => $loginSuccessMessage));
         }
+    }
+
+    public function logout()
+    {
+        $status = session_status();
+        if ($status == PHP_SESSION_NONE) {
+            //There is no active session
+            session_start();
+        } elseif ($status == PHP_SESSION_DISABLED) {
+            //Sessions are not available
+        } elseif ($status == PHP_SESSION_ACTIVE) {
+            //Destroy current and start new one
+            session_destroy();
+            session_start();
+        }
+
+        //Unset $_SESSION variables
+        unset($_SESSION["user"]);
+        unset($_SESSION["isAdmin"]);
+
+        echo $this->twig->render('login.twig');
     }
 
 }
