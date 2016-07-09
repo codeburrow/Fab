@@ -75,7 +75,7 @@ class DB
         if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
 
             $tags = "";
-            if ($data['tags'] != null)
+            if ( isset($data['tags']) )
                 foreach ($data['tags'] as $tag) {
                     $tags .= $tag . ' ';
                 }
