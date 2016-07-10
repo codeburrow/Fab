@@ -16,6 +16,8 @@ use Fab\Services\UploadImage;
 
 class AdminController extends Controller
 {
+    protected $user;
+
     public function __construct($item = null)
     {
         parent::__construct($item = null);
@@ -25,32 +27,26 @@ class AdminController extends Controller
             'debug' => true
         ));
         $this->twig->addExtension(new Twig_Extension_Debug());
+
+        if (isset($_SESSION['user']) && isset($_SESSION['password'])) {
+            $this->user = new User($_SESSION['user'], $_SESSION['password']);
+        }
     }
 
     public function index()
     {
-        var_dump($_COOKIE);
-        //First, check for cookies
-        if ( isset($_COOKIE['active']) ) {
+        if ($this->adminIsLoggedIn())
             echo $this->twig->render('dashboard.twig');
-            exit;
-        }
-
-        //Then, check for sessions
-        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
-            echo $this->twig->render('dashboard.twig');
-        } else {
-            echo $this->twig->render('login.twig');
-        }
+        else
+            $this->login();
     }
 
     public function addItem()
     {
-        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+        if ($this->adminIsLoggedIn())
             echo $this->twig->render('addItem.twig');
-        } else {
+        else
             echo $this->twig->render('login.twig');
-        }
     }
 
     public function postAddItem()
@@ -85,11 +81,12 @@ class AdminController extends Controller
 
     public function deleteItem()
     {
-        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+        if ($this->adminIsLoggedIn()) {
             $myDB = new DB();
             $items = $myDB->getAllItems();
 
-            echo $this->twig->render('deleteItem.twig', array('items' => $items));        } else {
+            echo $this->twig->render('deleteItem.twig', array('items' => $items));
+        } else {
             echo $this->twig->render('login.twig');
         }
 
@@ -118,7 +115,7 @@ class AdminController extends Controller
 
     public function editItem()
     {
-        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+        if ($this->adminIsLoggedIn()) {
             $myDB = new DB();
             $items = $myDB->getAllItems();
 
@@ -140,77 +137,59 @@ class AdminController extends Controller
 
     public function contactSupport()
     {
-        if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
+        if ($this->adminIsLoggedIn())
             echo $this->twig->render('contactSupport.twig');
-        } else {
+        else
             echo $this->twig->render('login.twig');
-        }
     }
 
-    public function login()
+    public function login($errorMessage = null)
     {
-        echo $this->twig->render('login.twig');
+        if (isset($errorMessage))
+            echo $this->twig->render('login.twig');
+        else
+            echo $this->twig->render('login.twig', array('errorMessage' => $errorMessage));
     }
 
     public function postLogin()
     {
-        $user = new User($_POST['username'], $_POST['password']); //find the user from db
+        $myDB = new DB();
 
-        $loginSuccessMessage = $user->isAdmin(); //authenticate user
+        $user = $myDB->getUser($_POST['username'], $_POST['password']);
 
-        if (empty($loginSuccessMessage)) { //if authentication successful
-
-            //Start $_SESSION
-            $status = session_status();
-            if ($status == PHP_SESSION_NONE) {
-                //There is no active session
-                session_start();
-            } elseif ($status == PHP_SESSION_DISABLED) {
-                //Sessions are not available
-            } elseif ($status == PHP_SESSION_ACTIVE) {
-                //Destroy current and start new one
-                session_destroy();
-                session_start();
-            }
-
-            //Set $_SESSION variables
-            $_SESSION['user'] = $user->getUsername();
-            $_SESSION['isAdmin'] = $user->getIsAdmin();
-
-            //Set $_COOKIE
-            if ( isset($_POST['remember']) ) {
-                setcookie("active", $_SESSION['user'], time()+(3600*24*365) );
-            }
-
-            echo $this->twig->render('dashboard.twig');
+        if (empty($user)) {
+            $errorMessage = "Wrong Credentials.";
+            $this->login($errorMessage);
         } else {
-            echo $this->twig->render('login.twig', array('errorMessage' => $loginSuccessMessage));
+            $this->user = new User($_POST['username'], $_POST['password']); //find the user from db
+
+            $errorMessage = $this->user->isAdmin(); //authenticate user
+
+            if (empty($errorMessage)) { //if authentication successful
+
+                $this->user->login(); //set Cookies and Session
+
+                $this->index(); //show dashboard
+            } else {
+                $this->login($errorMessage); //redirect to login page
+            }
         }
     }
 
     public function logout()
     {
-        $status = session_status();
-        if ($status == PHP_SESSION_NONE) {
-            //There is no active session
-            session_start();
-        } elseif ($status == PHP_SESSION_DISABLED) {
-            //Sessions are not available
-        } elseif ($status == PHP_SESSION_ACTIVE) {
-            //Destroy current and start new one
-            session_destroy();
-            session_start();
+        if ($this->adminIsLoggedIn()) {
+            $this->user->logout();
+            $this->login();
         }
+    }
 
-        //Unset $_SESSION variables
-        unset($_SESSION["user"]);
-        unset($_SESSION["isAdmin"]);
-
-        //Unset $_COOKIE variables
-        unset($_COOKIE['active']);
-        setcookie('active', '', time()-3600);
-
-        echo $this->twig->render('login.twig');
+    public function adminIsLoggedIn()
+    {
+        if (isset($this->user) && $this->user->isLoggedIn() && empty($this->user->isAdmin()))
+            return true;
+        else
+            return false;
     }
 
 }
