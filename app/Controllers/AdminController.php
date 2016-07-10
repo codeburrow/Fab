@@ -29,6 +29,14 @@ class AdminController extends Controller
 
     public function index()
     {
+        var_dump($_COOKIE);
+        //First, check for cookies
+        if ( isset($_COOKIE['active']) ) {
+            echo $this->twig->render('dashboard.twig');
+            exit;
+        }
+
+        //Then, check for sessions
         if (isset($_SESSION['user']) && isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === '1') {
             echo $this->twig->render('dashboard.twig');
         } else {
@@ -146,9 +154,7 @@ class AdminController extends Controller
 
     public function postLogin()
     {
-        $user = $_POST;
-
-        $user = new User($user['username'], $user['password']); //find the user from db
+        $user = new User($_POST['username'], $_POST['password']); //find the user from db
 
         $loginSuccessMessage = $user->isAdmin(); //authenticate user
 
@@ -170,6 +176,11 @@ class AdminController extends Controller
             //Set $_SESSION variables
             $_SESSION['user'] = $user->getUsername();
             $_SESSION['isAdmin'] = $user->getIsAdmin();
+
+            //Set $_COOKIE
+            if ( isset($_POST['remember']) ) {
+                setcookie("active", $_SESSION['user'], time()+(3600*24*365) );
+            }
 
             echo $this->twig->render('dashboard.twig');
         } else {
@@ -194,6 +205,10 @@ class AdminController extends Controller
         //Unset $_SESSION variables
         unset($_SESSION["user"]);
         unset($_SESSION["isAdmin"]);
+
+        //Unset $_COOKIE variables
+        unset($_COOKIE['active']);
+        setcookie('active', '', time()-3600);
 
         echo $this->twig->render('login.twig');
     }
