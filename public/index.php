@@ -20,10 +20,12 @@ $router->get('/admin/dashboard/contactSupport', 'AdminController', 'contactSuppo
 $router->get('/admin/login', 'AdminController', 'login');
 $router->get('/admin/logout', 'AdminController', 'logout');
 
+$router->post('/contact', 'MainController', 'postContact');
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
 $router->post('/admin/deleteItem', 'AdminController', 'postDeleteItem');
 $router->post('/admin/editItem', 'AdminController', 'postEditItem');
 $router->post('/admin/login', 'AdminController', 'postLogin');
+$router->post('/admin/contact', 'AdminController', 'postContact');
 
 
 ////See inside $router

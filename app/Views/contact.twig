@@ -25,6 +25,7 @@
                 </div>
             </div>
         </div>
+
         <div class="padd-80">
             <div class="row">
                 <div class="col-md-6">
@@ -62,20 +63,30 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="contact-form">
+
                         <div class="subtitle">
-                            <h4>Have a questions?</h4>
+                            <h4>Have a question?</h4>
+                            {% if result.success == 1 %}
+                                <h4 style="color: forestgreen">{{ result.message }}</h4>
+                            {% elseif result.success == 0 %}
+                                <h4 style="color: tomato">{{ result.message }}</h4>
+                            {% endif %}
                         </div>
-                        <form action="#" method="post" name="contactform">
-                            <input type="text" placeholder="Name*" name="name" required>
-                            <input type="email" placeholder="Email*" name="email" required>
-                            <input type="text" placeholder="Subject" name="subject">
-                            <textarea placeholder="Message"  name="message" required></textarea>
+
+                        <form action="/contact" method="post" name="contactform">
+                            <input type="text" placeholder="Name" name="name" required>
+                            <input type="email" placeholder="Email" name="email" required>
+                            <input type="text" placeholder="Subject" name="subject" required>
+                            <textarea placeholder="Message.."  name="message" required></textarea>
                             <input type="submit" value="send message" name="submit">
                         </form>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

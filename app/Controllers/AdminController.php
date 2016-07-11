@@ -9,6 +9,7 @@ namespace Fab\Controllers;
 
 use Fab\Database\DB;
 use Fab\Models\User;
+use Fab\Services\SwiftMailer;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
@@ -141,6 +142,15 @@ class AdminController extends Controller
             echo $this->twig->render('contactSupport.twig');
         else
             echo $this->twig->render('login.twig');
+    }
+
+    public function postContact()
+    {
+        $mailer = new SwiftMailer();
+
+        $result = $mailer->sendEmailToSupport($_POST);
+
+        echo $this->twig->render('contactSupport.twig', array('result'=>$result));
     }
 
     public function login($errorMessage = null)
