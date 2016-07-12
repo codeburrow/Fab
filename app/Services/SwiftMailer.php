@@ -42,8 +42,8 @@ class SwiftMailer
 
         // Create the Transport
         $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-			->setUsername('spiridakis.grg@gmail.com')
-			->setPassword('apofa5555sistikotita')
+			->setUsername('fab.agia@gmail.com')
+			->setPassword('faber2015')
         ;
 
         // Create the Mailer using your created Transport
@@ -57,7 +57,7 @@ class SwiftMailer
                 // Set the From address with an associative array
                 ->setFrom(array($cleanEmail => $cleanName))
                 // Set the To addresses with an associative array
-                ->setTo(array('spiridakis.grg@gmail.com' => 'Fab Support Team'))
+                ->setTo(array('anthonykalogeropoulos@gmail.com' => 'Fab Support Team'))
                 // Give it a body
                 ->setBody("Sender's Email: " . $cleanEmail . "\n\n" . $cleanMessage);
 
@@ -97,12 +97,10 @@ class SwiftMailer
 
         //Check if $_POST is empty and sanitize
         $mobile = $data['mobile'];
-        $email = $data['email'];
         $subject = $data['subject'];
         $message = $data['message'];
 
-        if(!empty($mobile) && !empty($email) && !empty($message) && !empty($subject)) {
-            $cleanEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if(!empty($mobile) && !empty($message) && !empty($subject)) {
             $cleanMessage = filter_var($message, FILTER_SANITIZE_STRING);
             $cleanSubject = filter_var($subject, FILTER_SANITIZE_STRING);
         } else {
@@ -113,9 +111,9 @@ class SwiftMailer
         }
 
         // Create the Transport
-        $transport = Swift_SmtpTransport::newInstance('smtp.secureserver.net.', 25)
-//			->setUsername('your username')
-//			->setPassword('your password')
+        $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
+			->setUsername('fab.agia@gmail.com')
+			->setPassword('faber2015')
         ;
 
         // Create the Mailer using your created Transport
@@ -127,11 +125,11 @@ class SwiftMailer
                 // Give the message a subject
                 ->setSubject('Email from fabgraphics.gr: ' . $cleanSubject)
                 // Set the From address with an associative array
-                ->setFrom(array($cleanEmail => 'Nikos Davrazos'))
+                ->setFrom(array('fab.agia@gmail.com' => 'Nikos Davrazos'))
                 // Set the To addresses with an associative array
                 ->setTo(array('support@codeburrow.com' => 'CodeBurrow Support Team'))
                 // Give it a body
-                ->setBody($cleanMessage . "\n Mobile Number: " . $mobile);
+                ->setBody($cleanMessage . "\n\nMobile Number: " . $mobile);
 
             // Optionally add any attachments
 //			->attach(Swift_Attachment::fromPath('my-document.pdf'))
