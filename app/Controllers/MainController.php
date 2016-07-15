@@ -6,9 +6,9 @@ use Fab\Services\SwiftMailer;
 class MainController extends Controller
 {
 
-    public function __construct($item=null)
+    public function __construct($data=null)
     {
-        parent::__construct($item);
+        parent::__construct($data);
     }
 
     public function index()

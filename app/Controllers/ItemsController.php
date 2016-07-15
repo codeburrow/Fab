@@ -5,9 +5,9 @@ use Fab\Database\DB;
 
 class ItemsController extends Controller
 {
-    public function __construct($item=null)
+    public function __construct($data=null)
     {
-        parent::__construct($item);
+        parent::__construct($data);
     }
 
     public function showAllItems()
@@ -24,7 +24,7 @@ class ItemsController extends Controller
         $DB = new DB();
 
         $item = $DB->getItem($this->item);
-        
+
         if ( !empty($item) ){ 
             $item = $item[0];
 
