@@ -202,4 +202,45 @@ class AdminController extends Controller
             return false;
     }
 
+    public function editCarousel()
+    {
+        if ($this->adminIsLoggedIn())   {
+            $myDB = new DB();
+            $gallery = $myDB->getCarouselGallery();
+            $carouselImages = $myDB->getCarouselImages();
+
+            echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages'=>$carouselImages));
+        }
+        else
+            echo $this->twig->render('login.twig');
+    }
+
+    public function updateCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+            $i = 0;
+
+            if (isset($_GET['included'])) {
+                $incl = $_GET['included'];
+                foreach ($incl as $includeID) {
+                    $i++;
+                    echo "ID: " . $includeID . " POSITION: " . $i;
+                    $myDB->includeInCarousel($includeID, $i);
+                }
+            }
+
+            if (isset($_GET['notIncluded'])) {
+                $notIncl = $_GET['notIncluded'];
+                foreach ($notIncl as $notInclID) {
+                    echo "Not Included ID: " . $notInclID;
+                    $myDB->notIncludeInCarousel($notInclID);
+                }
+            }
+
+        }      else  echo $this->twig->render('login.twig');
+    }
+
+
 }

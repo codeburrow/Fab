@@ -267,5 +267,56 @@ WHERE id=:id ;");
 
         return $result;
     }
-    
+
+    public function getCarouselGallery()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.carousel WHERE included = 0");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function getCarouselImages()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.carousel WHERE included = 1 ORDER BY POSITION ASC ");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function includeInCarousel($id, $position)
+    {
+        $stmt = $this->conn->prepare("update fab.carousel set included = ?, POSITION = ? WHERE id = ? ");
+
+        try{
+            $stmt->bindValue(1, "1");
+            $stmt->bindValue(2, $position);
+            $stmt->bindValue(3, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+        }
+    }
+
+    public function notIncludeInCarousel($id)
+    {
+        $stmt = $this->conn->prepare("update fab.carousel set included = ?, POSITION = ? WHERE id = ? ");
+
+        try{
+            $stmt->bindValue(1, "0");
+            $stmt->bindValue(2, null);
+            $stmt->bindValue(3, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+        }
+    }
+
+
 }

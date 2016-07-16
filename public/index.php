@@ -28,6 +28,12 @@ $router->post('/admin/login', 'AdminController', 'postLogin');
 $router->post('/admin/contact', 'AdminController', 'postContact');
 
 
+
+$router->get('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
+$router->post('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
+$router->get('/updateCarousel', 'AdminController', 'updateCarousel');
+
+
 ////See inside $router
 //echo "<pre>";
 //print_r($router);
