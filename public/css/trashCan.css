@@ -1,0 +1,70 @@
+
+body {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/79086/gaussian_blur_simple_background.jpg);
+    /* thanks to @xposedbones for that snip! */
+    -webkit-backface-visibility: hidden;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Raleway', Sans-Serif;
+    text-shadow: 0 1px 1px #fff; /*font smooth in chrome/win7 */
+    color: #111;
+    text-transform: lowercase;
+}
+
+.icon {
+    /*background: invert(#111);*/
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 50px auto 0;
+    border-radius: 3.5px;
+    transition: box-shadow .2s ease;
+}
+
+.icon:hover {
+     box-shadow: 0 0 7px rgba(10,10,10,.3);
+ }
+
+.icon:hover .lid, .icon:hover .lidcap {
+    transform: rotate(10deg);
+    margin-bottom: 10.5px;
+}
+
+
+
+
+.lidcap, .lid, .bin {
+    position: absolute;
+}
+
+.lidcap, .lid {
+    border-top-left-radius: 2.8px;
+    border-top-right-radius: 2.8px;
+    background: #111;
+    transition: transform .2s linear, margin .2s linear;
+}
+
+.lidcap {
+    bottom: 96.6px;
+    left: 55px;
+    height: 10px;
+    width: 18px;
+}
+
+.lid {
+    bottom: 84px;
+    left: 18px;
+    width: 90px;
+    height: 14px;
+}
+
+.bin {
+    bottom: 0;
+    left: 28px;
+    width: 70px;
+    border-top: 84px solid #111;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+}

@@ -2,11 +2,6 @@ var included = [];
 var notIncluded = [];
 var removePictures = [];
 var position = 1;
-console.log(included);
-//
-//$( "#rearrangeCarousel" ).click(function() {
-//      console.log("HIII");
-//});
 
 
 $( "#updateCarousel" ).click(function() {
