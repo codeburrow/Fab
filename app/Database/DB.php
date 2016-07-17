@@ -70,6 +70,32 @@ class DB
         return $result;
     }
 
+    public function getNextItem($item)
+    {
+        $stmt = $this->conn->prepare(" select * from fab.items where id = (select min(id) from fab.items where id > :id) ");
+        $stmt->bindParam(':id', $item['id']);
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
+    public function getPreviousItem($item)
+    {
+        $stmt = $this->conn->prepare(" select * from fab.items where id = (select max(id) from fab.items where id < :id) ");
+        $stmt->bindParam(':id', $item['id']);
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
     public function addItem($data, $imageName)
     {
         if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {

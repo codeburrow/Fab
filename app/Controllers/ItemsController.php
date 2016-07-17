@@ -25,10 +25,13 @@ class ItemsController extends Controller
 
         $item = $DB->getItem($this->item);
 
-        if ( !empty($item) ){ 
-            $item = $item[0];
+        if ( !empty($item) ){
 
-            echo $this->twig->render('single_item.twig', array('item' => $item));
+            $item = $item[0];
+            $nextItem = $DB->getNextItem($item);
+            $previousItem = $DB->getPreviousItem($item);
+            echo $this->twig->render('single_item.twig', array('item'=>$item, 'nextItem'=>$nextItem, 'previousItem'=>$previousItem));
+            
         } else { //if no items found
             echo $this->twig->render('error404.twig');
         }
