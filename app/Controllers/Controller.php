@@ -7,14 +7,18 @@ use Twig_Loader_Filesystem;
 class Controller
 {
     protected $twig;
+    protected $data;
+    protected $sector;
     protected $item;
 
-    public function __construct( $item=null )
+    public function __construct( $data=null )
     {
         //Environment Variable
         //define('CSS_PATH', 'http://fab.app/public/css/');
-        
-        $this->item = $item;
+
+        $this->data = $data;
+        $this->sector = $data[1];
+        isset($data[2]) ? $this->item=$data[2] : $this->item=null;
         
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Views/');
         $this->twig = new Twig_Environment($loader);

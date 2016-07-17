@@ -19,9 +19,9 @@ class AdminController extends Controller
 {
     protected $user;
 
-    public function __construct($item = null)
+    public function __construct($data = null)
     {
-        parent::__construct($item = null);
+        parent::__construct($data = null);
 
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Views/admin');
         $this->twig = new Twig_Environment($loader, array(

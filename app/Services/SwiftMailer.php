@@ -41,9 +41,9 @@ class SwiftMailer
         }
 
         // Create the Transport
-        $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-			->setUsername('fab.agia@gmail.com')
-			->setPassword('faber2015')
+        $transport = Swift_SmtpTransport::newInstance('mail.fabgraphics.gr')
+			->setUsername('support@fabgraphics.gr')
+			->setPassword('Davrazos612')
         ;
 
         // Create the Mailer using your created Transport
@@ -57,7 +57,7 @@ class SwiftMailer
                 // Set the From address with an associative array
                 ->setFrom(array($cleanEmail => $cleanName))
                 // Set the To addresses with an associative array
-                ->setTo(array('anthonykalogeropoulos@gmail.com' => 'Fab Support Team'))
+                ->setTo(array('support@fabgraphics.gr' => 'Fab Support Team'))
                 // Give it a body
                 ->setBody("Sender's Email: " . $cleanEmail . "\n\n" . $cleanMessage);
 
