@@ -30,6 +30,7 @@ class ItemsController extends Controller
             $item = $item[0];
             $nextItem = $DB->getNextItem($item);
             $previousItem = $DB->getPreviousItem($item);
+            
             echo $this->twig->render('single_item.twig', array('item'=>$item, 'nextItem'=>$nextItem, 'previousItem'=>$previousItem));
             
         } else { //if no items found

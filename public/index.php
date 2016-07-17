@@ -7,11 +7,13 @@ use Fab\Router;
 
 $router = new Router\Router();
 
+//Public
 $router->get('/', 'MainController', 'index');
 $router->get('/portfolio', 'ItemsController', 'showAllItems');
 $router->get('/portfolio/[\w\d]+', 'ItemsController', 'single_item');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
+//Admin
 $router->get('/admin/dashboard', 'AdminController', 'index');
 $router->get('/admin/dashboard/addItem', 'AdminController', 'addItem');
 $router->get('/admin/dashboard/deleteItem', 'AdminController', 'deleteItem');
@@ -20,8 +22,9 @@ $router->get('/admin/dashboard/contactSupport', 'AdminController', 'contactSuppo
 $router->get('/admin/login', 'AdminController', 'login');
 $router->get('/admin/logout', 'AdminController', 'logout');
 
-
+//Public
 $router->post('/contact', 'MainController', 'postContact');
+//Admin
 $router->post('/admin/addItem', 'AdminController', 'postAddItem');
 $router->post('/admin/deleteItem', 'AdminController', 'postDeleteItem');
 $router->post('/admin/editItem', 'AdminController', 'postEditItem');
