@@ -32,6 +32,7 @@ $router->post('/admin/contact', 'AdminController', 'postContact');
 $router->get('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
 $router->post('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
 $router->get('/updateCarousel', 'AdminController', 'updateCarousel');
+$router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
 
 
 ////See inside $router

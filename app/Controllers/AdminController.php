@@ -243,4 +243,25 @@ class AdminController extends Controller
     }
 
 
+    public function deleteFromCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+            if (isset($_GET['ID']) && isset($_GET['path'])) {
+                $id = $_GET['ID'];
+                 $myDB->deleteFromCarousel($id);
+
+                $path = $_GET['path'];
+                //deletes the file from the server
+                // the dirname(__FILE__) returns the current directory, therefore using it multiple times is similar to using ..
+                //since the ~/path didnt work i used it multiple times to access to correct directory
+                echo unlink ( dirname(dirname(dirname(__FILE__))) ."/public" . $path );
+
+            }
+
+        }      else  echo $this->twig->render('login.twig');
+    }
+
+
 }

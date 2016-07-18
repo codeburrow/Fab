@@ -24,23 +24,6 @@ $( "#updateCarousel" ).click(function() {
         notIncluded.push($( this).attr("id"));
         // add the id of the image to the array that contains the ids of the images to not be included in the carousel
     });
-    //
-    //$( "#sortable3" ).children().children().each(function( index ) {
-    //    console.log( index + " DELETE : " + $( this).attr("id") );
-    //    removePictures.push($( this).attr("id"));
-    //
-    //    $.ajax({
-    //        type: "GET",
-    //        url: 'delete',
-    //        data: {
-    //            key1: removePictures
-    //        },
-    //        success: function(msg){
-    //            console.log('WOW' + msg);
-    //        }
-    //    })
-    //});
-
 
     $.ajax({
         type: "GET",

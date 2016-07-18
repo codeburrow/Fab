@@ -30,16 +30,16 @@
                             {% endif %}
                             <br/>
 
-                            <form method="post" action="/admin/dashboard/car" id="rearrangeCarousel" data-parsley-validate
+                            <form method="post" action="/admin/dashboard/editCarousel" id="rearrangeCarousel" data-parsley-validate
                                   class="form-horizontal form-label-left" enctype="multipart/form-data">
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="carousel">Carousel
                                     </label>
-                                    <ul id="carousel" class="sortable connectedSortable test draggable">
+                                    <ul id="carousel" class="sortable connectedSortable test">
 
                                         {% for image in carouselImages %}
-                                            <li>
+                                            <li class="draggable" id="1">
                                                 <img src="/images/{{ image.name }}" alt="" style="width: 100%; height: 100%;" id="{{ image.id }}"/>
                                             </li>
                                         {% endfor %}
@@ -48,10 +48,10 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="gallery">Gallery
                                     </label>
-                                    <ul id="gallery" class="sortable connectedSortable draggable">
+                                    <ul id="gallery" class="sortable connectedSortable">
                                         {% for image in gallery %}
                                             <li>
-                                                <img src="/images/{{ image.name }}" alt="" style="width: 100%; height: 100%; " id="{{ image.id }}"/>
+                                                <img src="/images/{{ image.name }}" class="draggable" alt="" style="width: 100%; height: 100%; " id="{{ image.id }}"/>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -71,7 +71,6 @@
 
                     <div class="clearfix"></div>
 
-                    <div id="draggable" style="background-color: #00A000; width: 90px; height: 90px; z-index: 10;"></div>
                     <div id="droppable">
                         <div class="icon">
                             <div class="lid"></div>

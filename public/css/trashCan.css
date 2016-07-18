@@ -1,39 +1,20 @@
 
-body {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/79086/gaussian_blur_simple_background.jpg);
-    /* thanks to @xposedbones for that snip! */
-    -webkit-backface-visibility: hidden;
-}
-
-h1 {
-    text-align: center;
-    font-family: 'Raleway', Sans-Serif;
-    text-shadow: 0 1px 1px #fff; /*font smooth in chrome/win7 */
-    color: #111;
-    text-transform: lowercase;
-}
-
 .icon {
     /*background: invert(#111);*/
     position: relative;
-    width: 140px;
-    height: 140px;
+    width: 210px;
+    height: 210px;
     margin: 50px auto 0;
     border-radius: 3.5px;
     transition: box-shadow .2s ease;
+    box-shadow: 0 0 7px rgba(10,10,10,.3);
 }
 
-.icon:hover {
-     box-shadow: 0 0 7px rgba(10,10,10,.3);
- }
 
 .icon:hover .lid, .icon:hover .lidcap {
     transform: rotate(10deg);
     margin-bottom: 10.5px;
 }
-
-
-
 
 .lidcap, .lid, .bin {
     position: absolute;
@@ -47,24 +28,41 @@ h1 {
 }
 
 .lidcap {
-    bottom: 96.6px;
-    left: 55px;
-    height: 10px;
-    width: 18px;
+    bottom: 144.9px;
+    left: 90px;
+    height: 15px;
+    width: 27px;
 }
 
 .lid {
-    bottom: 84px;
-    left: 18px;
-    width: 90px;
-    height: 14px;
+    bottom: 125px;
+    left: 34.5px;
+    width: 135px;
+    height: 21px;
 }
 
 .bin {
     bottom: 0;
-    left: 28px;
-    width: 70px;
-    border-top: 84px solid #111;
+    left: 50px;
+    width: 105px;
+    border-top: 126px solid #111;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
+}
+
+
+.removed-item {
+    animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+}
+
+@keyframes removed-item-animation {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
 }

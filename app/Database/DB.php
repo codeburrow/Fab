@@ -318,5 +318,16 @@ WHERE id=:id ;");
         }
     }
 
+    public function deleteFromCarousel($id)
+    {
+        $stmt = $this->conn->prepare("delete from fab.carousel WHERE id = ? ");
+
+        try{
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+        }
+    }
+
 
 }
