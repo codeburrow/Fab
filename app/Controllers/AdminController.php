@@ -264,4 +264,27 @@ class AdminController extends Controller
     }
 
 
+    public function uploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+
+                echo $this->twig->render('uploadCarousel.twig');
+
+        }      else  echo $this->twig->render('login.twig');
+    }
+
+    public function postUploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+//            $myDB = new DB();
+                          var_dump($_POST);
+
+            echo $this->twig->render('uploadCarousel.twig');
+
+        }      else  echo $this->twig->render('login.twig');
+    }
+
+
 }

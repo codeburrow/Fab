@@ -34,6 +34,10 @@ $router->get('/updateCarousel', 'AdminController', 'updateCarousel');
 $router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
 
 
+$router->get('/admin/dashboard/uploadCarousel', 'AdminController', 'uploadCarousel');
+$router->post('/admin/dashboard/uploadCarousel', 'AdminController', 'postUploadCarousel');
+
+
 ////See inside $router
 //echo "<pre>";
 //print_r($router);
