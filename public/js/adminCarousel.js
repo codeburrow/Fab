@@ -1,6 +1,5 @@
 var included = [];
 var notIncluded = [];
-var removePictures = [];
 var position = 1;
 
 

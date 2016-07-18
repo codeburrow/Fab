@@ -6,10 +6,9 @@ jQuery( document ).ready(function( $ ) {
         $( "#gallery, #carousel" ).sortable({
             //connectWith allows both ul to connected to be able to drag li from one to the other
             //if they are not connected you would only be able to sort li within their parent ul and not added to a different ul
-            connectWith: ".connectedSortable",
-
-            dropOnEmpty: false
+            connectWith: ".connectedSortable"
         }).disableSelection();
+
     });
 
     var image = "";
@@ -103,6 +102,8 @@ jQuery( document ).ready(function( $ ) {
                 $(".lid").css("margin-bottom", "0px");
                 $(".lidcap").css("margin-bottom", "0px");
                 $(ui.draggable).css("opacity", "1");
+                location.reload();
+                ui.draggable.cancel();
 
             }
 
