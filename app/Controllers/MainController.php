@@ -16,11 +16,6 @@ class MainController extends Controller
         echo $this->twig->render('index.twig');
     }
 
-    public function portfolio()
-    {
-        echo $this->twig->render('portfolio.twig');
-    }
-
     public function about()
     {
         echo $this->twig->render('about.twig');

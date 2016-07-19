@@ -5,6 +5,10 @@ require_once __DIR__ . '/../app/setup.php';
 use Fab\Controllers;
 use Fab\Router;
 
+//Load .env variables
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../app/');
+$dotenv->load();
+
 $router = new Router\Router();
 
 //Public

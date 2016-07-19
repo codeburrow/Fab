@@ -6,7 +6,7 @@ use PDOException;
 
 class DB
 {
-    protected $servername;
+    protected $host;
     protected $port;
     protected $dbname;
     protected $username;
@@ -14,28 +14,42 @@ class DB
     protected $conn;
 
     /**
-     * DB constructor. By default connect to Homestead virtual DB server and to the 'kourtis' database schema.
+     * DB constructor. By default connect to papaki.gr DB (MySQL) and to the 'fab' database schema.
+     */
+    public function __construct()
+    {
+        $this->host = getenv('HOST');
+        $this->port = getenv('PORT');
+        $this->dbname = getenv('DBNAME');
+        $this->username = getenv('USERNAME');
+        $this->password = getenv('PASSWORD');
+
+        $this->connect();
+    }
+
+    /**
+     * Alternative DB constructor for connection to the Homestead virtual DB server
      * @param string $servername
      * @param string $port
      * @param string $dbname
      * @param string $username
      * @param string $password
      */
-    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
-    {
-        $this->servername = $servername;
-        $this->port = $port;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
-
-        $this->connect();
-    }
+//    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
+//    {
+//        $this->servername = $servername;
+//        $this->port = $port;
+//        $this->dbname = $dbname;
+//        $this->username = $username;
+//        $this->password = $password;
+//
+//        $this->connect();
+//    }
 
     public function connect()
     {
         try {
-            $conn = new PDO("mysql:host=$this->servername;port:$this->port;dbname=$this->servername", $this->username, $this->password);
+            $conn = new PDO("mysql:host=$this->host;port:$this->port;dbname=$this->host", $this->username, $this->password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn = $conn;
@@ -101,7 +115,7 @@ class DB
         if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
 
             $tags = "";
-            if ( isset($data['tags']) )
+            if (isset($data['tags']))
                 foreach ($data['tags'] as $tag) {
                     $tags .= $tag . ' ';
                 }
@@ -146,7 +160,7 @@ class DB
                 $nameOfImage = $arrayWithNameOfImage[0]['image'];
 //                var_dump("Image: " . $nameOfImage);
                 $resultRemoveImage = unlink("images/$nameOfImage");
-                if ($resultRemoveImage == false){
+                if ($resultRemoveImage == false) {
                     $result = 3; //Image was not removed from server
                     break;
                 }
@@ -173,7 +187,7 @@ WHERE id=:id ;");
 
     public function editItems($data)
     {
-        if( isset($data['items']) ) {
+        if (isset($data['items'])) {
 
             foreach ($data['items'] as $itemID) {
 
@@ -181,7 +195,7 @@ WHERE id=:id ;");
 
                 try {
                     $db = $this->conn;
-                    $stmt_editItems= $db->prepare($query_selectItems);
+                    $stmt_editItems = $db->prepare($query_selectItems);
                     $stmt_editItems->bindParam(':id', $itemID);
                     $result_items = $stmt_editItems->execute();
                 } catch (PDOException $ex) {
@@ -207,7 +221,7 @@ WHERE id=:id ;");
                     $description = $data['description'][$itemID];
 
                     try {
-                        $update_item = $this->conn->prepare( "UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, tags=:tags, description=:description WHERE id=:id;" );
+                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, tags=:tags, description=:description WHERE id=:id;");
                         $update_item->bindParam(':id', $itemID);
                         $update_item->bindParam(':urlName', $urlName);
                         $update_item->bindParam(':title', $title);
@@ -267,31 +281,31 @@ WHERE id=:id ;");
     }
 
 
-    public function getCarouselPosts()
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM kourtis.posts WHERE kourtis.posts.inCarousel = 1");
-        $stmt->execute();
+//    public function getCarouselPosts()
+//    {
+//        $stmt = $this->conn->prepare("SELECT * FROM kourtis.posts WHERE kourtis.posts.inCarousel = 1");
+//        $stmt->execute();
+//
+//        // set the resulting array to associative
+//        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+//        $result = $stmt->fetchAll();
+//
+//        return $result;
+//    }
+//
+//    public function getNewestPosts($numberOfPosts = 3)
+//    {
+//        $stmt = $this->conn->prepare("SELECT *
+//      FROM kourtis.posts
+//      ORDER BY kourtis.posts.id DESC
+//      LIMIT $numberOfPosts");
+//        $stmt->execute();
+//
+//        // set the resulting array to associative
+//        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+//        $result = $stmt->fetchAll();
+//
+//        return $result;
+//    }
 
-        // set the resulting array to associative
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $stmt->fetchAll();
-
-        return $result;
-    }
-
-    public function getNewestPosts($numberOfPosts = 3)
-    {
-        $stmt = $this->conn->prepare("SELECT * 
-      FROM kourtis.posts 
-      ORDER BY kourtis.posts.id DESC
-      LIMIT $numberOfPosts");
-        $stmt->execute();
-
-        // set the resulting array to associative
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $stmt->fetchAll();
-
-        return $result;
-    }
-    
 }
