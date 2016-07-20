@@ -310,7 +310,7 @@ WHERE id=:id ;");
 
 
     /** CAROUSEL ADMIN **/
-    
+
     public function getCarouselGallery()
     {
         $stmt = $this->conn->prepare("SELECT * FROM fab.carousel WHERE included = 0");
@@ -360,6 +360,25 @@ WHERE id=:id ;");
             $stmt->execute();
         } catch (Exception $e) {
         }
+    }
+
+    public function addCarouselImage($data, $imageName)
+    {
+        if (isset($data['included'])) {
+            $included = $data['included'];
+        } else {
+            $included = 0;
+        }
+
+        $stmt = $this->conn->prepare("INSERT INTO fab.carousel (`name`, `included`, `position`)
+    VALUES (:name, :included, :position)");
+        $stmt->bindValue(':name', $imageName);
+        $stmt->bindValue(':included', $included);
+        $stmt->bindValue(':position', null);
+        $result = $stmt->execute();
+
+        return $result = $result == true ? $result = "" : $result = "Error inserting image into carousel database.";
+
     }
 
     public function deleteFromCarousel($id)

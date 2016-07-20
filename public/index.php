@@ -41,9 +41,11 @@ $router->post('/admin/contact', 'AdminController', 'postContact');
 $router->get('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
 $router->get('/admin/dashboard/updateCarousel', 'AdminController', 'updateCarousel');
 
-$router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
 $router->get('/admin/dashboard/uploadCarousel', 'AdminController', 'uploadCarousel');
 $router->post('/admin/dashboard/uploadCarousel', 'AdminController', 'postUploadCarousel');
+
+$router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
+
 
 
 ////See inside $router

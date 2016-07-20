@@ -204,15 +204,16 @@ class AdminController extends Controller
 
 
     /** Carousel */
-
     public function editCarousel()
     {
         if ($this->adminIsLoggedIn()) {
+
             $myDB = new DB();
             $gallery = $myDB->getCarouselGallery();
             $carouselImages = $myDB->getCarouselImages();
 
             echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages));
+
         } else {
             echo $this->twig->render('login.twig');
         }
@@ -249,6 +250,53 @@ class AdminController extends Controller
         }  
     }
 
+    public function uploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            echo $this->twig->render('uploadCarousel.twig');
+        } else {
+            echo $this->twig->render('login.twig');
+        }
+    }
+
+    public function postUploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+
+            $DB = new DB();
+            $uploadImageService = new UploadImage();
+            $success = false;
+
+            //Try to upload image
+            $uploadError = $uploadImageService->uploadImage();
+            if (empty($uploadError)) {
+
+                //Add row to db
+                $nameOfImage = $_FILES['image']['name'];
+                $result = $DB->addCarouselImage($_POST, $nameOfImage);
+
+                if (empty($result)) { //successfully added row
+                    $flashMessage = "Item Succesfully Added";
+                    $success = true;
+                } else { //failed to add row
+                    $flashMessage = "Error: Could not add item. Please check the values you have given.";
+                    //Delete uploaded image from server
+                    unlink("images/$nameOfImage");
+                }
+
+            } else { //image failed to upload
+                $flashMessage = $uploadError . "\nError: Could not upload image.";
+            }
+
+            echo $this->twig->render('uploadCarousel.twig', array('flashMessage' => $flashMessage, 'success' => $success));
+
+        } else {
+
+            echo $this->twig->render('login.twig');
+
+        }
+    }
+
 
     public function deleteFromCarousel()
     {
@@ -270,27 +318,7 @@ class AdminController extends Controller
         } else  echo $this->twig->render('login.twig');
     }
 
-    public function uploadCarousel()
-    {
-        if ($this->adminIsLoggedIn()) {
-            $myDB = new DB();
 
-
-            echo $this->twig->render('uploadCarousel.twig');
-
-        } else  echo $this->twig->render('login.twig');
-    }
-
-    public function postUploadCarousel()
-    {
-        if ($this->adminIsLoggedIn()) {
-//            $myDB = new DB();
-            var_dump($_POST);
-
-            echo $this->twig->render('uploadCarousel.twig');
-
-        } else  echo $this->twig->render('login.twig');
-    }
 
 
 }

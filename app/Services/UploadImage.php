@@ -21,7 +21,6 @@ class UploadImage
         $uploadOk = 1;
         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
-
         // Check if image file is a actual image or fake image
         if (isset($_POST["submit"])) {
             $check = getimagesize($_FILES["image"]["tmp_name"]);
@@ -47,8 +46,7 @@ class UploadImage
         }
 
         // Allow certain file formats
-        if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
+        if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"
         ) {
             $errorMessage = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.\n";
             $uploadOk = 0;
