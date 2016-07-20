@@ -342,8 +342,5 @@ class AdminController extends Controller
             echo $this->twig->render('login.twig');
         }
     }
-
-
-
-
+    
 }
