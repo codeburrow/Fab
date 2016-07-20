@@ -11,7 +11,8 @@
     "require": {
         "twig/twig": "~1.0",
         "swiftmailer/swiftmailer": "^5.4",
-        "vlucas/phpdotenv": "^2.3"
+        "vlucas/phpdotenv": "^2.3",
+        "ccampbell/chromephp": "^4.1"
     },
     "autoload": {
         "psr-4": {

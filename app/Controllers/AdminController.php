@@ -7,6 +7,7 @@
  */
 namespace Fab\Controllers;
 
+use ChromePhp;
 use Fab\Database\DB;
 use Fab\Models\User;
 use Fab\Services\SwiftMailer;
@@ -34,6 +35,7 @@ class AdminController extends Controller
         }
     }
 
+    /**** GENERAL ****/
     public function index()
     {
         if ($this->adminIsLoggedIn())
@@ -42,6 +44,73 @@ class AdminController extends Controller
             $this->login();
     }
 
+    public function contactSupport()
+    {
+        if ($this->adminIsLoggedIn())
+            echo $this->twig->render('contactSupport.twig');
+        else
+            echo $this->twig->render('login.twig');
+    }
+
+    public function postContact()
+    {
+        $mailer = new SwiftMailer();
+
+        $result = $mailer->sendEmailToSupport($_POST);
+
+        echo $this->twig->render('contactSupport.twig', array('result' => $result));
+    }
+
+    public function login($errorMessage = null)
+    {
+        if (isset($errorMessage))
+            echo $this->twig->render('login.twig');
+        else
+            echo $this->twig->render('login.twig', array('errorMessage' => $errorMessage));
+    }
+
+    public function postLogin()
+    {
+        $myDB = new DB();
+
+        $user = $myDB->getUser($_POST['username'], $_POST['password']);
+
+        if (empty($user)) {
+            $errorMessage = "Wrong Credentials.";
+            $this->login($errorMessage);
+        } else {
+            $this->user = new User($_POST['username'], $_POST['password']); //find the user from db
+
+            $errorMessage = $this->user->isAdmin(); //authenticate user
+
+            if (empty($errorMessage)) { //if authentication successful
+
+                $this->user->login(); //set Cookies and Session
+
+                $this->index(); //show dashboard
+            } else {
+                $this->login($errorMessage); //redirect to login page
+            }
+        }
+    }
+
+    public function logout()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $this->user->logout();
+            $this->login();
+        }
+    }
+
+    public function adminIsLoggedIn()
+    {
+        if (isset($this->user) && $this->user->isLoggedIn() && empty($this->user->isAdmin()))
+            return true;
+        else
+            return false;
+    }
+
+    /**** ITEMS ****/
     public function addItem()
     {
         if ($this->adminIsLoggedIn())
@@ -136,74 +205,7 @@ class AdminController extends Controller
         echo $this->twig->render('editItem.twig', array('items' => $items, 'result' => $result));
     }
 
-    public function contactSupport()
-    {
-        if ($this->adminIsLoggedIn())
-            echo $this->twig->render('contactSupport.twig');
-        else
-            echo $this->twig->render('login.twig');
-    }
-
-    public function postContact()
-    {
-        $mailer = new SwiftMailer();
-
-        $result = $mailer->sendEmailToSupport($_POST);
-
-        echo $this->twig->render('contactSupport.twig', array('result' => $result));
-    }
-
-    public function login($errorMessage = null)
-    {
-        if (isset($errorMessage))
-            echo $this->twig->render('login.twig');
-        else
-            echo $this->twig->render('login.twig', array('errorMessage' => $errorMessage));
-    }
-
-    public function postLogin()
-    {
-        $myDB = new DB();
-
-        $user = $myDB->getUser($_POST['username'], $_POST['password']);
-
-        if (empty($user)) {
-            $errorMessage = "Wrong Credentials.";
-            $this->login($errorMessage);
-        } else {
-            $this->user = new User($_POST['username'], $_POST['password']); //find the user from db
-
-            $errorMessage = $this->user->isAdmin(); //authenticate user
-
-            if (empty($errorMessage)) { //if authentication successful
-
-                $this->user->login(); //set Cookies and Session
-
-                $this->index(); //show dashboard
-            } else {
-                $this->login($errorMessage); //redirect to login page
-            }
-        }
-    }
-
-    public function logout()
-    {
-        if ($this->adminIsLoggedIn()) {
-            $this->user->logout();
-            $this->login();
-        }
-    }
-
-    public function adminIsLoggedIn()
-    {
-        if (isset($this->user) && $this->user->isLoggedIn() && empty($this->user->isAdmin()))
-            return true;
-        else
-            return false;
-    }
-
-
-    /** Carousel */
+    /**** CAROUSEL ****/
     public function editCarousel($success=null, $flashMessage=null)
     {
         if ($this->adminIsLoggedIn()) {
@@ -274,7 +276,7 @@ class AdminController extends Controller
             if (isset($success) && isset($flashMessage)) {
                 echo $this->twig->render('uploadCarousel.twig', array('success'=>$success, 'flashMessage'=>$flashMessage));
             } else {
-                echo $this->twig->render('uploadCarousel.twig');
+                echo $this->twig->render('uploadCarousel.twig');    
             }
         } else {
             echo $this->twig->render('login.twig');
@@ -318,7 +320,7 @@ class AdminController extends Controller
 
         }
     }
-    
+
     public function deleteFromCarousel()
     {
         if ($this->adminIsLoggedIn()) {
@@ -333,10 +335,7 @@ class AdminController extends Controller
                 $myDB->deleteFromCarousel($id);
 
                 //deletes the file from the server
-                // the dirname(__FILE__) returns the current directory, therefore using it multiple times is similar to using ..
-                //since the ~/path didn't work I used it multiple times to access the correct directory
-                var_dump($path);
-                echo unlink(dirname(dirname(dirname(__FILE__))) . "/public" . $path);
+                echo unlink(getenv('DOCUMENT_ROOT') . $path);
             }
 
         } else {
