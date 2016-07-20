@@ -51,7 +51,8 @@ jQuery( document ).ready(function($) {
 
             var id = $( ui.draggable).children().attr("id");
             var path = $( ui.draggable).children().attr("src");
-            console.log(id);
+            console.log('ID: ' + id);
+            console.log('Path: ' + path);
 
             // detecting whether the user chose to proceed or not
             if(confirm("Are you sure you want to delete this image permanently?")) {
@@ -64,7 +65,7 @@ jQuery( document ).ready(function($) {
                         path: path
                     },
                     success: function(msg){
-                        console.log('WOW' + msg);
+                        console.log('Success Message: ' + msg);
                     }
                 });
 

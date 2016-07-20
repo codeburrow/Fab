@@ -12,7 +12,7 @@ $("#updateCarousel").click(function () {
     $("#carousel").children().children().each(function (index) {
 
         //get id of every image in every li in the #carousel ul
-        console.log(index + " I : " + $(this).attr("id"));
+        console.log(index + "Inclulded ID: " + $(this).attr("id"));
 
         // add the id of the image to the array that contains the ids of the images to be included in the carousel
         included.push($(this).attr("id"));
@@ -27,7 +27,7 @@ $("#updateCarousel").click(function () {
     $("#gallery").children().children().each(function (index) {
 
         //get id of every image in every li in the #gallery ul
-        console.log(index + " NI : " + $(this).attr("id"));
+        console.log(index + "Not Included ID: " + $(this).attr("id"));
 
         // add the id of the image to the array that contains the ids of the images to NOT be included in the carousel
         notIncluded.push($(this).attr("id"));
@@ -36,13 +36,13 @@ $("#updateCarousel").click(function () {
 
     $.ajax({
         type: "GET",
-        url: '/admin/dashboard/updateCarousel',
+        url: '/admin/dashboard/postEditCarousel',
         data: {
             included: included,
             notIncluded: notIncluded
         },
         success: function (msg) {
-            console.log('WOW' + msg);
+            console.log('Success Message: ' + msg);
         }
     });
 

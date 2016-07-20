@@ -13,7 +13,7 @@ use Fab\Services\SwiftMailer;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
-use Fab\Services\UploadImage;
+use Fab\Services\UploadImageService;
 
 class AdminController extends Controller
 {
@@ -53,7 +53,7 @@ class AdminController extends Controller
     public function postAddItem()
     {
         $DB = new DB();
-        $uploadImageService = new UploadImage();
+        $uploadImageService = new UploadImageService();
         $success = false;
 
         //Try to upload image
@@ -204,7 +204,7 @@ class AdminController extends Controller
 
 
     /** Carousel */
-    public function editCarousel()
+    public function editCarousel($success=null, $flashMessage=null)
     {
         if ($this->adminIsLoggedIn()) {
 
@@ -212,26 +212,38 @@ class AdminController extends Controller
             $gallery = $myDB->getCarouselGallery();
             $carouselImages = $myDB->getCarouselImages();
 
-            echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages));
+            if (isset($success) && isset($flashMessage)) {
+                echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages, 'success'=>$success, 'flashMessage'=>$flashMessage));
+            } else {
+                echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages));
+            }
 
         } else {
             echo $this->twig->render('login.twig');
         }
     }
 
-    public function updateCarousel()
+    public function postEditCarousel()
     {
         if ($this->adminIsLoggedIn()) {
 
             $myDB = new DB();
             $i = 0;
+            $flashMessage = "Carousel Successfully Edited!";
+            $success = true;
 
             if (isset($_GET['included'])) {
                 $incl = $_GET['included'];
                 foreach ($incl as $includeID) {
                     $i++;
                     echo "ID: " . $includeID . " POSITION: " . $i;
-                    $myDB->includeInCarousel($includeID, $i);
+                    $result = $myDB->includeInCarousel($includeID, $i);
+
+                    if ($result == false) {
+                        $success = false;
+                        $flashMessage = "Error: Something went wrong!";
+                        break;
+                    }
                 }
             }
 
@@ -239,21 +251,31 @@ class AdminController extends Controller
                 $notIncl = $_GET['notIncluded'];
                 foreach ($notIncl as $notInclID) {
                     echo "Not Included ID: " . $notInclID;
-                    $myDB->notIncludeInCarousel($notInclID);
+                    $result = $myDB->notIncludeInCarousel($notInclID);
+
+                    if ($result == false) {
+                        $success = false;
+                        $flashMessage = "Error: Something went wrong!";
+                        break;
+                    }
                 }
             }
 
-            echo $this->twig->render('editCarousel.twig');
+            $this->editCarousel($success, $flashMessage);
 
         } else {
             echo $this->twig->render('login.twig'); 
         }  
     }
 
-    public function uploadCarousel()
+    public function uploadCarousel($success=null, $flashMessage=null)
     {
         if ($this->adminIsLoggedIn()) {
-            echo $this->twig->render('uploadCarousel.twig');
+            if (isset($success) && isset($flashMessage)) {
+                echo $this->twig->render('uploadCarousel.twig', array('success'=>$success, 'flashMessage'=>$flashMessage));
+            } else {
+                echo $this->twig->render('uploadCarousel.twig');
+            }
         } else {
             echo $this->twig->render('login.twig');
         }
@@ -264,7 +286,7 @@ class AdminController extends Controller
         if ($this->adminIsLoggedIn()) {
 
             $DB = new DB();
-            $uploadImageService = new UploadImage();
+            $uploadImageService = new UploadImageService();
             $success = false;
 
             //Try to upload image
@@ -288,7 +310,7 @@ class AdminController extends Controller
                 $flashMessage = $uploadError . "\nError: Could not upload image.";
             }
 
-            echo $this->twig->render('uploadCarousel.twig', array('flashMessage' => $flashMessage, 'success' => $success));
+            $this->uploadCarousel($success, $flashMessage);
 
         } else {
 
@@ -296,26 +318,30 @@ class AdminController extends Controller
 
         }
     }
-
-
+    
     public function deleteFromCarousel()
     {
         if ($this->adminIsLoggedIn()) {
+
             $myDB = new DB();
 
             if (isset($_GET['ID']) && isset($_GET['path'])) {
+
                 $id = $_GET['ID'];
+                $path = $_GET['path'];
+
                 $myDB->deleteFromCarousel($id);
 
-                $path = $_GET['path'];
                 //deletes the file from the server
                 // the dirname(__FILE__) returns the current directory, therefore using it multiple times is similar to using ..
-                //since the ~/path didnt work i used it multiple times to access to correct directory
+                //since the ~/path didn't work I used it multiple times to access the correct directory
+                var_dump($path);
                 echo unlink(dirname(dirname(dirname(__FILE__))) . "/public" . $path);
-
             }
 
-        } else  echo $this->twig->render('login.twig');
+        } else {
+            echo $this->twig->render('login.twig');
+        }
     }
 
 

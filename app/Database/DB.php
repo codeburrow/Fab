@@ -343,9 +343,11 @@ WHERE id=:id ;");
             $stmt->bindValue(1, "1");
             $stmt->bindValue(2, $position);
             $stmt->bindValue(3, $id);
-            $stmt->execute();
-        } catch (Exception $e) {
-            echo $e;
+            $result = $stmt->execute();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -357,15 +359,18 @@ WHERE id=:id ;");
             $stmt->bindValue(1, "0");
             $stmt->bindValue(2, null);
             $stmt->bindValue(3, $id);
-            $stmt->execute();
-        } catch (Exception $e) {
+            $result = $stmt->execute();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
         }
     }
 
     public function addCarouselImage($data, $imageName)
     {
-        if (isset($data['included'])) {
-            $included = $data['included'];
+        if (isset($data['include'])) {
+            $included = $data['include'];
         } else {
             $included = 0;
         }
@@ -387,8 +392,10 @@ WHERE id=:id ;");
 
         try {
             $stmt->bindValue(1, $id);
-            $stmt->execute();
-        } catch (Exception $e) {
+            $result = $stmt->execute();
+
+            return $result;
+        } catch (PDOException $e) {
         }
     }
 
