@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Fab | Dashboard </title>
     {{ include('head.twig') }}
+    {% block head %}{% endblock head %}
 </head>
 <body class="nav-md">
 
@@ -23,6 +24,8 @@
 </div>
 
 {{ include('scripts.twig') }}
+{% block scripts %}
+{% endblock scripts %}
 
 </body>
 </html>

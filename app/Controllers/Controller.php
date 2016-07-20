@@ -2,6 +2,7 @@
 namespace Fab\Controllers;
 
 use Twig_Environment;
+use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
 
 class Controller
@@ -21,6 +22,10 @@ class Controller
         isset($data[2]) ? $this->item=$data[2] : $this->item=null;
         
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../Views/');
-        $this->twig = new Twig_Environment($loader);
+        $this->twig = new Twig_Environment($loader, array(
+            'debug' => true,
+            // ...
+        ));
+        $this->twig->addExtension(new Twig_Extension_Debug());
     }
 }

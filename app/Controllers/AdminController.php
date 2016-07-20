@@ -150,7 +150,7 @@ class AdminController extends Controller
 
         $result = $mailer->sendEmailToSupport($_POST);
 
-        echo $this->twig->render('contactSupport.twig', array('result'=>$result));
+        echo $this->twig->render('contactSupport.twig', array('result' => $result));
     }
 
     public function login($errorMessage = null)
@@ -201,5 +201,96 @@ class AdminController extends Controller
         else
             return false;
     }
+
+
+    /** Carousel */
+
+    public function editCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+            $gallery = $myDB->getCarouselGallery();
+            $carouselImages = $myDB->getCarouselImages();
+
+            echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages));
+        } else {
+            echo $this->twig->render('login.twig');
+        }
+    }
+
+    public function updateCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+
+            $myDB = new DB();
+            $i = 0;
+
+            if (isset($_GET['included'])) {
+                $incl = $_GET['included'];
+                foreach ($incl as $includeID) {
+                    $i++;
+                    echo "ID: " . $includeID . " POSITION: " . $i;
+                    $myDB->includeInCarousel($includeID, $i);
+                }
+            }
+
+            if (isset($_GET['notIncluded'])) {
+                $notIncl = $_GET['notIncluded'];
+                foreach ($notIncl as $notInclID) {
+                    echo "Not Included ID: " . $notInclID;
+                    $myDB->notIncludeInCarousel($notInclID);
+                }
+            }
+
+            echo $this->twig->render('editCarousel.twig');
+
+        } else {
+            echo $this->twig->render('login.twig'); 
+        }  
+    }
+
+
+    public function deleteFromCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+            if (isset($_GET['ID']) && isset($_GET['path'])) {
+                $id = $_GET['ID'];
+                $myDB->deleteFromCarousel($id);
+
+                $path = $_GET['path'];
+                //deletes the file from the server
+                // the dirname(__FILE__) returns the current directory, therefore using it multiple times is similar to using ..
+                //since the ~/path didnt work i used it multiple times to access to correct directory
+                echo unlink(dirname(dirname(dirname(__FILE__))) . "/public" . $path);
+
+            }
+
+        } else  echo $this->twig->render('login.twig');
+    }
+
+    public function uploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+
+            echo $this->twig->render('uploadCarousel.twig');
+
+        } else  echo $this->twig->render('login.twig');
+    }
+
+    public function postUploadCarousel()
+    {
+        if ($this->adminIsLoggedIn()) {
+//            $myDB = new DB();
+            var_dump($_POST);
+
+            echo $this->twig->render('uploadCarousel.twig');
+
+        } else  echo $this->twig->render('login.twig');
+    }
+
 
 }

@@ -36,6 +36,16 @@ $router->post('/admin/login', 'AdminController', 'postLogin');
 $router->post('/admin/contact', 'AdminController', 'postContact');
 
 
+
+/*** Carousel **/
+$router->get('/admin/dashboard/editCarousel', 'AdminController', 'editCarousel');
+$router->get('/admin/dashboard/updateCarousel', 'AdminController', 'updateCarousel');
+
+$router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
+$router->get('/admin/dashboard/uploadCarousel', 'AdminController', 'uploadCarousel');
+$router->post('/admin/dashboard/uploadCarousel', 'AdminController', 'postUploadCarousel');
+
+
 ////See inside $router
 //echo "<pre>";
 //print_r($router);

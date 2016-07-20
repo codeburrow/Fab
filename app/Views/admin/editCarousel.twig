@@ -1,0 +1,100 @@
+{% extends "master.twig" %}
+
+{% block head %}
+
+    <link rel="stylesheet" type="text/css" href="/css/adminCarousel.css">
+    <link rel="stylesheet" type="text/css" href="/css/trashCan.css">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/js/adminSortable.js"></script>
+
+{% endblock head %}
+
+
+{% block content %}
+
+    <div class="right_col" role="main">
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard_graph">
+
+                    <div class="row x_title">
+                        <div class="col-md-6">
+                            <h3>Edit Carousel Images
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_content">
+                            {% if success == true %}
+                                <h1 style="color: forestgreen;">{{ flashMessage }}</h1>
+                            {% else %}
+                                <h1 style="color: tomato;">{{ flashMessage }}</h1>
+                            {% endif %}
+                            <br/>
+
+                            <form method="get" action="/admin/dashboard/editCarousel" id="rearrangeCarousel"
+                                  data-parsley-validate
+                                  class="form-horizontal form-label-left" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label style="color: limegreen" class="control-label col-xs-12" for="carousel">Included in Carousel
+                                    </label>
+                                    <ul id="carousel" class="sortable connectedSortable">
+                                        {% for image in carouselImages %}
+                                            <li class="draggable" id="1">
+                                                <img src="/images/{{ image.name }}" alt=""
+                                                     style="width: 100%; height: 100%;" id="{{ image.id }}"/>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label style="color: tomato" class="control-label col-xs-12" for="gallery">NOT Included in Carousel
+                                    </label>
+                                    <ul id="gallery" class="sortable connectedSortable">
+                                        {% for image in gallery %}
+                                            <li>
+                                                <img src="/images/{{ image.name }}" class="draggable" alt=""
+                                                     style="width: 100%; height: 100%; " id="{{ image.id }}"/>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <input type="submit" id="updateCarousel" name="updateCarousel"
+                                               class="btn btn-block btn-success" value="Update Carousel">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div id="droppable">
+                        <div class="icon">
+                            <div class="lid"></div>
+                            <div class="lidcap"></div>
+                            <div class="bin"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+    <script type="text/javascript" src="/js/adminCarousel.js"></script>
+{% endblock scripts %}

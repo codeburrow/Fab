@@ -1,0 +1,67 @@
+
+.icon {
+    position: relative;
+    width: 210px;
+    height: 210px;
+    margin: 50px auto 0;
+    border-radius: 3.5px;
+    transition: box-shadow .2s ease;
+    box-shadow: 0 0 7px rgba(10,10,10,.3);
+}
+
+
+.icon:hover .lid, .icon:hover .lidcap {
+    transform: rotate(10deg);
+    margin-bottom: 10.5px;
+}
+
+.lidcap, .lid, .bin {
+    position: absolute;
+}
+
+.lidcap, .lid {
+    border-top-left-radius: 2.8px;
+    border-top-right-radius: 2.8px;
+    background: #111;
+    transition: transform .2s linear, margin .2s linear;
+}
+
+.lidcap {
+    bottom: 144.9px;
+    left: 90px;
+    height: 15px;
+    width: 27px;
+}
+
+.lid {
+    bottom: 125px;
+    left: 34.5px;
+    width: 135px;
+    height: 21px;
+}
+
+.bin {
+    bottom: 0;
+    left: 50px;
+    width: 105px;
+    border-top: 126px solid #111;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+}
+
+
+.removed-item {
+    animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+}
+
+@keyframes removed-item-animation {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}

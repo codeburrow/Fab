@@ -16,16 +16,16 @@ class DB
     /**
      * DB constructor. By default connect to papaki.gr DB (MySQL) and to the 'fab' database schema.
      */
-    public function __construct()
-    {
-        $this->host = getenv('HOST');
-        $this->port = getenv('PORT');
-        $this->dbname = getenv('DBNAME');
-        $this->username = getenv('USERNAME');
-        $this->password = getenv('PASSWORD');
-
-        $this->connect();
-    }
+//    public function __construct()
+//    {
+//        $this->host = getenv('HOST');
+//        $this->port = getenv('PORT');
+//        $this->dbname = getenv('DBNAME');
+//        $this->username = getenv('USERNAME');
+//        $this->password = getenv('PASSWORD');
+//
+//        $this->connect();
+//    }
 
     /**
      * Alternative DB constructor for connection to the Homestead virtual DB server
@@ -35,16 +35,16 @@ class DB
      * @param string $username
      * @param string $password
      */
-//    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
-//    {
-//        $this->servername = $servername;
-//        $this->port = $port;
-//        $this->dbname = $dbname;
-//        $this->username = $username;
-//        $this->password = $password;
-//
-//        $this->connect();
-//    }
+    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
+    {
+        $this->servername = $servername;
+        $this->port = $port;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
+
+        $this->connect();
+    }
 
     public function connect()
     {
@@ -307,5 +307,70 @@ WHERE id=:id ;");
 //
 //        return $result;
 //    }
+
+
+    /** CAROUSEL ADMIN **/
+    
+    public function getCarouselGallery()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.carousel WHERE included = 0");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function getCarouselImages()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.carousel WHERE included = 1 ORDER BY POSITION ASC ");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function includeInCarousel($id, $position)
+    {
+        $stmt = $this->conn->prepare("update fab.carousel set included = ?, POSITION = ? WHERE id = ? ");
+
+        try {
+            $stmt->bindValue(1, "1");
+            $stmt->bindValue(2, $position);
+            $stmt->bindValue(3, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function notIncludeInCarousel($id)
+    {
+        $stmt = $this->conn->prepare("update fab.carousel set included = ?, POSITION = ? WHERE id = ? ");
+
+        try {
+            $stmt->bindValue(1, "0");
+            $stmt->bindValue(2, null);
+            $stmt->bindValue(3, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+        }
+    }
+
+    public function deleteFromCarousel($id)
+    {
+        $stmt = $this->conn->prepare("delete from fab.carousel WHERE id = ? ");
+
+        try {
+            $stmt->bindValue(1, $id);
+            $stmt->execute();
+        } catch (Exception $e) {
+        }
+    }
 
 }

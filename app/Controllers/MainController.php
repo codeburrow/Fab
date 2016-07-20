@@ -1,6 +1,7 @@
 <?php
 namespace Fab\Controllers;
 
+use Fab\Database\DB;
 use Fab\Services\SwiftMailer;
 
 class MainController extends Controller
@@ -13,7 +14,10 @@ class MainController extends Controller
 
     public function index()
     {
-        echo $this->twig->render('index.twig');
+        $DB = new DB();
+        $images = $DB->getCarouselImages();
+
+        echo $this->twig->render('index.twig', array('images'=>$images));
     }
 
     public function about()
