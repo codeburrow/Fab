@@ -7,7 +7,6 @@
  */
 namespace Fab\Controllers;
 
-use ChromePhp;
 use Fab\Database\DB;
 use Fab\Models\User;
 use Fab\Services\SwiftMailer;
