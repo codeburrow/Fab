@@ -36,13 +36,13 @@ class AdminController extends Controller
     }
 
     /**** GENERAL ****/
-    public function index()
-    {
-        if ($this->adminIsLoggedIn())
-            echo $this->twig->render('dashboard.twig');
-        else
-            $this->login();
-    }
+//    public function index()
+//    {
+//        if ($this->adminIsLoggedIn())
+//            echo $this->twig->render('dashboard.twig');
+//        else
+//            $this->login();
+//    }
 
     public function contactSupport()
     {
@@ -64,9 +64,9 @@ class AdminController extends Controller
     public function login($errorMessage = null)
     {
         if (isset($errorMessage))
-            echo $this->twig->render('login.twig');
-        else
             echo $this->twig->render('login.twig', array('errorMessage' => $errorMessage));
+        else
+            echo $this->twig->render('login.twig');
     }
 
     public function postLogin()
@@ -87,7 +87,7 @@ class AdminController extends Controller
 
                 $this->user->login(); //set Cookies and Session
 
-                $this->index(); //show dashboard
+                $this->addItem(); //show addItem page
             } else {
                 $this->login($errorMessage); //redirect to login page
             }
