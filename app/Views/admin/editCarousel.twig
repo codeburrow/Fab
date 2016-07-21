@@ -46,7 +46,7 @@
                                     <ul id="carousel" class="sortable connectedSortable">
                                         {% for image in carouselImages %}
                                             <li class="draggable">
-                                                <img src="/images/{{ image.name }}" alt=""
+                                                <img src="/images/carousel/{{ image.name }}" alt=""
                                                      style="width: 100%; height: 100%;" id="{{ image.id }}"/>
                                             </li>
                                         {% endfor %}
@@ -58,7 +58,7 @@
                                     <ul id="gallery" class="sortable connectedSortable">
                                         {% for image in gallery %}
                                             <li>
-                                                <img src="/images/{{ image.name }}" class="draggable" alt=""
+                                                <img src="/images/carousel/{{ image.name }}" class="draggable" alt=""
                                                      style="width: 100%; height: 100%; " id="{{ image.id }}"/>
                                             </li>
                                         {% endfor %}

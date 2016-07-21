@@ -3,6 +3,10 @@ Templates:
 2) Gallery page --> http://3nacu.com/milano-template/onepage.html
 3) Gallery page --> http://template.themeton.com/acerola/
 
-Images:
+Portfolio Images:
 1) The higher the resolution the better.
 2) Smaller than 400 x 250 resolution will not display nicely.
+
+Carousel Images:
+1) Images should ideally be 2000x1377.
+2) If they have a different resolution they will try to either expand or shrink to fit the page.

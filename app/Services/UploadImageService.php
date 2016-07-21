@@ -13,13 +13,13 @@ class UploadImageService
     {
     }
 
-    public function uploadImage()
+    public function uploadImage($dir="images/")
     {
         // Check if image file is a actual image or fake image
         if ( isset($_POST["submit"]) && isset($_FILES['image']) && !empty($_FILES['image']['name']) ) {
 
             $errorMessage = "";
-            $target_dir = "images/";
+            $target_dir = $dir;
             $target_file = $target_dir . basename($_FILES["image"]["name"]);
             $uploadOk = 1;
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
@@ -43,12 +43,12 @@ class UploadImageService
 
             // Check file size
             if ($_FILES["image"]["size"] > 5000000) {
-                $errorMessage = "Sorry, your file is too large. Max size: 500KB.\n";
+                $errorMessage = "Sorry, your file is too large. Max size: 5MB.\n";
                 $uploadOk = 0;
             }
 
             // Allow certain file formats
-            if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"
+            if ($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "PNG"
             ) {
                 $errorMessage = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.\n";
                 $uploadOk = 0;

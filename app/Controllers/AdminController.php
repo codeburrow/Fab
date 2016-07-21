@@ -287,11 +287,12 @@ class AdminController extends Controller
         if ($this->adminIsLoggedIn()) {
 
             $DB = new DB();
+            $uploadDir = 'images/carousel/';
             $uploadImageService = new UploadImageService();
             $success = false;
 
             //Try to upload image
-            $uploadError = $uploadImageService->uploadImage();
+            $uploadError = $uploadImageService->uploadImage($uploadDir);
             if (empty($uploadError)) {
 
                 //Add row to db
@@ -304,7 +305,7 @@ class AdminController extends Controller
                 } else { //failed to add row
                     $flashMessage = "Error: Could not add item. Please check the values you have given.";
                     //Delete uploaded image from server
-                    unlink("images/$nameOfImage");
+                    unlink($uploadDir . $nameOfImage);
                 }
 
             } else { //image failed to upload

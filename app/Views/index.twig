@@ -4,78 +4,28 @@
 
 {% block content %}
 
-    {#<div id="fullpage" class="fpage">#}
-        {#<div class="w-section section arch-1">#}
-            {#<div class="section-overlay"></div>#}
-            {#<div class="full-content">#}
-                {#<div class="w-hidden-medium w-hidden-small w-hidden-tiny arrow-down more-up">#}
-                    {#<a href="#coming" class="w-inline-block icon-scroll"></a>#}
-                {#</div>#}
-                {#<div class="w-container container-contact">#}
-                    {#<div class="align-center">#}
-                        {#<div>#}
-                            {#<div data-animation="outin" data-duration="500" data-infinite="1" data-delay="3000"#}
-                                 {#data-autoplay="1" class="w-slider text-rotator">#}
-                                {#<div class="w-slider-mask">#}
-                                    {#<div class="w-slide">#}
-                                        {#<h1 class="inner-title center">WE'RE A&nbsp;CREATIVE&nbsp;studio</h1>#}
-                                    {#</div>#}
-                                    {#<div class="w-slide">#}
-                                        {#<h1 class="inner-title center">WE HAVE 10 YEARS OF EXPERIENCE</h1>#}
-                                    {#</div>#}
-                                    {#<div class="w-slide">#}
-                                        {#<h1 class="inner-title center">we love what we do</h1>#}
-                                    {#</div>#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                        {#<div><img src="images/sub-handmade-c.png" alt="handmade">#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="w-section section arch-2">#}
-            {#<div class="section-overlay"></div>#}
-            {#<div class="full-content">#}
-                {#<div class="w-container container-contact">#}
-                    {#<div>#}
-                        {#<div id="element2" class="inner-title smaller">INTERIOR DESIGN</div>#}
-                        {#<div><img src="images/sub-handmade-c.png" alt="handmade">#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="w-section section arch-3">#}
-            {#<div class="section-overlay"></div>#}
-            {#<div class="full-content">#}
-                {#<div class="w-container container-contact">#}
-                    {#<div class="align-right">#}
-                        {#<div id="element3" class="inner-title smaller">DESIGN HOUSES</div>#}
-                        {#<div><img src="images/sub-handmade-c.png" alt="handmade">#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="w-section section arch-4">#}
-            {#<div class="section-overlay"></div>#}
-            {#<div class="full-content">#}
-                {#<div class="w-container container-contact">#}
-                    {#<div>#}
-                        {#<div id="element4" class="inner-title smaller">INDUSTRIAL PREMISES</div>#}
-                        {#<div><img src="images/sub-handmade-c.png" alt="handmade">#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
+    <div id="fullpage" class="fpage">
 
-    {#{{ dump(images) }}#}
-    {% for image in images %}
-        <img src="/images/{{ image.name }}"/>
-    {% endfor %}
+        {% for image in images %}
+            <div style="background-image: url('/images/carousel/{{ image.name }}');
+                    background-position: 50% 100%;
+                    background-size: cover;
+                    background-repeat: no-repeat;"
+                 class="w-section section ">
+                <div class="section-overlay"></div>
+                <div class="full-content">
+                    <div class="w-container container-contact">
+                        <div>
+                            <div id="element2" class="inner-title smaller">INTERIOR DESIGN</div>
+                            <div><img src="/images/sub-handmade-c.png" alt="handmade">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
 
 {% endblock content %}
