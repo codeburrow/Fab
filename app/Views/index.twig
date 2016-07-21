@@ -16,9 +16,13 @@
                 <div class="full-content">
                     <div class="w-container container-contact">
                         <div>
-                            <div id="element2" class="inner-title smaller">INTERIOR DESIGN</div>
+                            {% if image.description is not null %}
+                            <div id="element2" class="inner-title smaller">
+                                    {{ image.description }}
+                            </div>
                             <div><img src="/images/sub-handmade-c.png" alt="handmade">
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
