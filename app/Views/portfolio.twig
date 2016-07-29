@@ -21,12 +21,12 @@
                     <div class="izotope-container gutt-col3 sliphover">
                         <div class="grid-sizer"></div>
 
-                        {% for item in items %}
-                            <div class="item {{ item.tags|e }}">
-                                <a href="/portfolio/{{ item.urlName|e }}"></a>
+                        {% for project in projects %}
+                            <div class="item {{ project.tags|e }}">
+                                <a href="/portfolio/{{ project.urlName|e }}"></a>
                                 <div class="det-img ellem"
-                                     data-caption="<a href='/portfolio/{{ item.urlName|e }}' class='sleep-title'><span class='vertical-align'><h4>{{ item.title|e }}</h4><span class='pr-sutitle'>{{ item.subtitle|e }}</span></span></a>">
-                                    <img src="images/{{ item.image|e }}" alt="">
+                                     data-caption="<a href='/portfolio/{{ project.urlName|e }}' class='sleep-title'><span class='vertical-align'><h4>{{ project.projectName|e }}</h4><span class='pr-sutitle'>{{ project.projectDescription|e }}</span></span></a>">
+                                    <img src="images/{{ project.image|e }}" alt="">
                                 </div>
                             </div>
                         {% endfor %}

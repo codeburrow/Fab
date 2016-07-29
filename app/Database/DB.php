@@ -126,6 +126,19 @@ class DB
         }
     }
 
+    public function getProjectByID($id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.projects WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
     public function getItem($urlName)
     {
         $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE :urlName");

@@ -40,9 +40,18 @@ class ItemsController extends Controller
     {
         $myDB = new DB();
 
-        $items = $myDB->getAllProjectsForPortfolio();
+        $projects = $myDB->getAllProjectsForPortfolio();
+
+        $count = 0;
+        foreach ($projects as $project) {
+            $fullProject = $myDB->getProjectByID($project['projectID']);
+            $project['projectDescription'] = $fullProject['projectDescription'];
+            $project['projectName'] = $fullProject['name'];
+            $projects[$count] = $project;
+            $count++;
+        }
         
-        echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
+        echo $this->twig->render( 'portfolio.twig', array('projects' => $projects) );
     }
 
     public function single_item()
