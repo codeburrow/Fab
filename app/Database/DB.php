@@ -70,8 +70,20 @@ class DB
 
         return $result;
     }
-
+    
     public function getAllProjects()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.projects");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function getAllProjectsForPortfolio()
     {
         try {
             $stmt = $this->conn->prepare("
@@ -357,7 +369,7 @@ WHERE id=:id ;");
     public function addProject($data)
     {
         try {
-            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `description`)
+            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `projectDescription`)
                                           VALUES (:name, :description);");
             $stmt->bindParam(':name', $data['name']);
             $stmt->bindParam(':description', $data['description']);
@@ -371,6 +383,41 @@ WHERE id=:id ;");
         return $result;
     }
 
+    public function deleteProjects($data)
+    {
+        if (isset($data['projects'])) {
+            $projects = $data['projects'];
+
+            foreach ($projects as $project => $id) {
+
+                try {
+                    //Delete row from db
+                    $stmt = $this->conn->prepare("DELETE FROM fab.projects
+WHERE id=:id ;");
+                    $stmt->bindParam(':id', $id);
+                    $stmt->execute();
+
+                    if ($stmt == true) {
+                        $result['success'] = true; //all good
+                        $result['message'] = "Success! Projects Deleted.";
+                        break;
+                    } else {
+                        $result['success'] = false; //sth went wrong
+                        $result['message'] = "Error: Sth went wrong.";
+                        break;
+                    }
+                } catch (PDOException $e) {
+                    $result['success'] = false; //sth went wrong
+                    $result['message'] = "Error: " . $e->getMessage();
+                }
+            }
+        } else {
+            $result['success'] = false; //No items selected in form
+            $result['message'] = "Error: No projects selected!";
+        }
+
+        return $result;
+    }
 
 //    public function getCarouselPosts()
 //    {

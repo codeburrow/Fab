@@ -51,8 +51,8 @@ $router->post('/admin/contact', 'AdminController', 'postContact');
 $router->post('/admin/dashboard/uploadCarousel', 'AdminController', 'postUploadCarousel');
 //Admin - Projects
 $router->post('/admin/addProject', 'AdminController', 'postAddProject');
-$router->get('/admin/dashboard/editProject', 'AdminController', 'editProject');
-$router->get('/admin/dashboard/deleteProject', 'AdminController', 'deleteProject');
+$router->post('/admin/dashboard/editProject', 'AdminController', 'editProject');
+$router->post('/admin/deleteProject', 'AdminController', 'postDeleteProject');
 
 
 ////See inside $router

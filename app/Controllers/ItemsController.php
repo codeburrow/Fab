@@ -40,7 +40,7 @@ class ItemsController extends Controller
     {
         $myDB = new DB();
 
-        $items = $myDB->getAllProjects();
+        $items = $myDB->getAllProjectsForPortfolio();
         
         echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
     }
