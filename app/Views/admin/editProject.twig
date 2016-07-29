@@ -6,8 +6,8 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>Delete Project
-                        <small> from portfolio page</small>
+                    <h3>Edit Project
+                        <small> in portfolio page</small>
                     </h3>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Select Project to Delete</h2>
+                            <h2>Click on the fields to edit</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -27,13 +27,13 @@
                         </div>
                         <div class="x_content">
 
-                            {% if result.success == true %}
+                            {% if result.success == 1 %}
                                 <h3 style="color: forestgreen">{{ result.message }}</h3>
                             {% else %}
                                 <h3 style="color: tomato">{{ result.message }}</h3>
                             {% endif %}
 
-                            <form action="/admin/deleteProject" method="post">
+                            <form action="/admin/editProject" method="post">
                                 <table id="datatable"
                                        class="table table-striped table-bordered responsive-utilities jambo_table">
                                     <thead>
@@ -48,8 +48,8 @@
                                     {% for project in projects %}
                                         <tr>
                                             <td><input type="checkbox" name="projects[]" value="{{ project.id }}"/></td>
-                                            <td>{{ project.name }}</td>
-                                            <td>{{ project.projectDescription }}</td>
+                                            <td><input style="border: 1px solid lightblue;" type="text" name="name[{{ project.id }}]" value="{{ project.name }}"></td>
+                                            <td><input style="border: 1px solid lightblue;" type="text" name="description[{{ project.id }}]" value="{{ project.projectDescription }}"></td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -57,8 +57,8 @@
 
                                 <div class="form-group-lg" style="margin: 10px auto;">
                                     <button style="margin: 30px auto;" type="submit"
-                                            class="btn btn-danger btn-block pull-left">
-                                        Delete Selected Projects
+                                            class="btn btn-warning btn-block pull-left">
+                                        Edit Selected Projects
                                     </button>
                                 </div>
 

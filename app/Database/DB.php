@@ -419,6 +419,82 @@ WHERE id=:id ;");
         return $result;
     }
 
+    public function editProjects($data)
+    {
+        if (isset($data['projects'])) {
+
+            foreach ($data['projects'] as $projectID) {
+
+                $query_selectItems = "SELECT * FROM fab.projects WHERE id=:id;";
+
+                try {
+                    $db = $this->conn;
+                    $stmt_editProjects = $db->prepare($query_selectItems);
+                    $stmt_editProjects->bindParam(':id', $projectID);
+                    $result_items = $stmt_editProjects->execute();
+                } catch (PDOException $ex) {
+                    // For testing, you could use a die and message.
+                    //die("Failed to run query: " . $ex->getMessage());
+
+                    //or just use this use this one to product JSON data:
+                    $response["success"] = 0;
+                    $response["message"] = "Database Error. Please Try Again!";
+
+                    return $response;
+                }
+
+                //fetching all the rows from the query
+                $dbProjects = $stmt_editProjects->fetch();
+
+                if (!empty($dbProjects)) {
+
+                    $name = $data['name'][$projectID];
+                    $description = $data['description'][$projectID];
+
+                    try {
+                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName,  projectDescription=:description WHERE id=:id;");
+                        $update_item->bindParam(':id', $projectID);
+                        $update_item->bindParam(':projectName', $name);
+                        $update_item->bindParam(':description', $description);
+                        $result_editItem = $update_item->execute();
+                    } catch (PDOException $ex) {
+                        // For testing, you could use a die and message.
+                        //die("Failed to run query: " . $ex->getMessage());
+
+                        //or just use this use this one to product JSON data:
+                        $response["success"] = 0;
+                        $response["message"] = "Database Error 2: " . $ex->getMessage();
+
+                        return $response;
+                    }
+
+                    if ($result_editItem) {
+                        $response["success"] = 1;
+                        $response["message"] = "Project(s) Successfully Edited ";
+                    } else {
+                        $response["success"] = 0;
+                        $response["message"] = "Project(s) Could Not Be Edited ";
+                    }
+
+                } else {
+                    // no routes found
+                    $response["success"] = 0;
+                    $response["message"] = "Error. No project with ID $projectID was found.";
+
+                    return $response;
+                }
+            }
+
+            return $response;
+        } else {
+            $response["success"] = 2;
+            $response["message"] = "Error. You did NOT select any projects!";
+
+            return $response;
+        }
+    }
+
+    
 //    public function getCarouselPosts()
 //    {
 //        $stmt = $this->conn->prepare("SELECT * FROM kourtis.posts WHERE kourtis.posts.inCarousel = 1");
