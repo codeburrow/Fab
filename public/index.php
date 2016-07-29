@@ -32,6 +32,10 @@ $router->get('/deleteFromCarouselDB', 'AdminController', 'deleteFromCarousel');
 //Admin - General
 $router->get('/admin/login', 'AdminController', 'login');
 $router->get('/admin/logout', 'AdminController', 'logout');
+//Admin - Projects
+$router->get('/admin/dashboard/addProject', 'AdminController', 'addProject');
+$router->get('/admin/dashboard/editProject', 'AdminController', 'editProject');
+$router->get('/admin/dashboard/deleteProject', 'AdminController', 'deleteProject');
 
 /******** POST ********/
 //Public
@@ -45,6 +49,10 @@ $router->post('/admin/login', 'AdminController', 'postLogin');
 $router->post('/admin/contact', 'AdminController', 'postContact');
 //Admin - Carousel
 $router->post('/admin/dashboard/uploadCarousel', 'AdminController', 'postUploadCarousel');
+//Admin - Projects
+$router->post('/admin/addProject', 'AdminController', 'postAddProject');
+$router->get('/admin/dashboard/editProject', 'AdminController', 'editProject');
+$router->get('/admin/dashboard/deleteProject', 'AdminController', 'deleteProject');
 
 
 ////See inside $router

@@ -1,0 +1,67 @@
+{% extends "master.twig" %}
+
+{% block content %}
+
+    <div class="right_col" role="main">
+
+        {# Add New Item Form #}
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard_graph">
+
+                    <div class="row x_title">
+                        <div class="col-md-6">
+                            <h3>Add New Project
+                                <small>to the portfolio page</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_content">
+                            {% if success == true %}
+                                <h1 style="color: forestgreen;">{{ flashMessage }}</h1>
+                            {% else %}
+                                <h1 style="color: tomato;">{{ flashMessage }}</h1>
+                            {% endif %}
+                            <br/>
+                            <form method="post" action="/admin/addProject" id="addProjectForm" data-parsley-validate
+                                  class="form-horizontal form-label-left">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
+                                        <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="name" name="name" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description" class="control-label col-md-3 col-sm-3 col-xs-12">Description </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <textarea id="description" class="form-control col-md-7 col-xs-12" type="text"
+                                                  name="description"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                        <button type="reset" class="btn btn-danger">Cancel</button>
+                                        <button type="submit" class="btn btn-success" name="submit">Submit</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

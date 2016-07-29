@@ -354,6 +354,23 @@ WHERE id=:id ;");
         return $result;
     }
 
+    public function addProject($data)
+    {
+        try {
+            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `description`)
+                                          VALUES (:name, :description);");
+            $stmt->bindParam(':name', $data['name']);
+            $stmt->bindParam(':description', $data['description']);
+            $result = $stmt->execute();
+
+            $result == true ? $result = "" : $result = "Error inserting into database.";
+        } catch (PDOException $e) {
+            $result = "Error: This project name already exists!\n" . $e->getMessage();
+        }
+
+        return $result;
+    }
+
 
 //    public function getCarouselPosts()
 //    {

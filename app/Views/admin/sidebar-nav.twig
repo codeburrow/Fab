@@ -29,6 +29,14 @@
                 <ul class="nav side-menu">
                     {#<li><a><i class="fa fa-home"></i> Home </a>#}
                     {#</li>#}
+                    <li><a><i class="fa fa-folder-open-o" aria-hidden="true"></i> Projects <span
+                                    class="fa fa-chevron-down"></span></a>
+                        <ul style="display: none" class="nav child_menu">
+                            <li><a href="/admin/dashboard/addProject">Add</a></li>
+                            <li><a href="/admin/dashboard/deleteProject">Delete</a></li>
+                            <li><a href="/admin/dashboard/editProject">Edit</a></li>
+                        </ul>
+                    </li>
                     <li><a><i class="fa fa-briefcase"></i> Portfolio <span
                                     class="fa fa-chevron-down"></span></a>
                         <ul style="display: none" class="nav child_menu">

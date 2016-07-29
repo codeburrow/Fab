@@ -204,8 +204,35 @@ class AdminController extends Controller
         echo $this->twig->render('editItem.twig', array('items' => $items, 'result' => $result));
     }
 
+    /**** PROJECTS ****/
+    public function addProject()
+    {
+        if ($this->adminIsLoggedIn())
+            echo $this->twig->render('addProject.twig');
+        else
+            echo $this->twig->render('login.twig');
+    }
+
+    public function postAddProject()
+    {
+        $DB = new DB();
+        $success = false;
+
+        //Add row to db
+        $result = $DB->addProject($_POST);
+
+        if (empty($result)) { //successfully added row
+            $flashMessage = "Item Succesfully Added";
+            $success = true;
+        } else { //failed to add row
+            $flashMessage = $result;
+        }
+
+        echo $this->twig->render('addProject.twig', array('flashMessage' => $flashMessage, 'success' => $success));
+    }
+
     /**** CAROUSEL ****/
-    public function editCarousel($success=null, $flashMessage=null)
+    public function editCarousel($success = null, $flashMessage = null)
     {
         if ($this->adminIsLoggedIn()) {
 
@@ -214,7 +241,7 @@ class AdminController extends Controller
             $carouselImages = $myDB->getCarouselImages();
 
             if (isset($success) && isset($flashMessage)) {
-                echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages, 'success'=>$success, 'flashMessage'=>$flashMessage));
+                echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages, 'success' => $success, 'flashMessage' => $flashMessage));
             } else {
                 echo $this->twig->render('editCarousel.twig', array('gallery' => $gallery, 'carouselImages' => $carouselImages));
             }
@@ -265,17 +292,17 @@ class AdminController extends Controller
             $this->editCarousel($success, $flashMessage);
 
         } else {
-            echo $this->twig->render('login.twig'); 
-        }  
+            echo $this->twig->render('login.twig');
+        }
     }
 
-    public function uploadCarousel($success=null, $flashMessage=null)
+    public function uploadCarousel($success = null, $flashMessage = null)
     {
         if ($this->adminIsLoggedIn()) {
             if (isset($success) && isset($flashMessage)) {
-                echo $this->twig->render('uploadCarousel.twig', array('success'=>$success, 'flashMessage'=>$flashMessage));
+                echo $this->twig->render('uploadCarousel.twig', array('success' => $success, 'flashMessage' => $flashMessage));
             } else {
-                echo $this->twig->render('uploadCarousel.twig');    
+                echo $this->twig->render('uploadCarousel.twig');
             }
         } else {
             echo $this->twig->render('login.twig');
@@ -342,5 +369,5 @@ class AdminController extends Controller
             echo $this->twig->render('login.twig');
         }
     }
-    
+
 }
