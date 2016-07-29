@@ -19,6 +19,32 @@ class ItemsController extends Controller
         echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
     }
 
+    public function showAllProjectItems()
+    {
+        $myDB = new DB();
+
+        $urlName = $this->item;
+
+        $item = $myDB->getItem($urlName);
+        $nextItem = $myDB->getNextProject($item);
+        $previousItem = $myDB->getPreviousProject($item);
+        
+        $projectID = $item['projectID'];
+
+        $items = $myDB->getAllProjectItemsByProjectID($projectID);
+
+        echo $this->twig->render( 'single_item.twig', array('items' => $items, 'nextItem'=>$nextItem, 'previousItem'=>$previousItem) );
+    }
+
+    public function showAllProjects()
+    {
+        $myDB = new DB();
+
+        $items = $myDB->getAllProjects();
+        
+        echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
+    }
+
     public function single_item()
     {
         $DB = new DB();
@@ -27,7 +53,6 @@ class ItemsController extends Controller
 
         if ( !empty($item) ){
 
-            $item = $item[0];
             $nextItem = $DB->getNextItem($item);
             $previousItem = $DB->getPreviousItem($item);
             

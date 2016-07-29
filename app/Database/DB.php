@@ -16,16 +16,16 @@ class DB
     /**
      * DB constructor. By default connect to papaki.gr DB (MySQL) and to the 'fab' database schema.
      */
-    public function __construct()
-    {
-        $this->host = getenv('HOST');
-        $this->port = getenv('PORT');
-        $this->dbname = getenv('DBNAME');
-        $this->username = getenv('USERNAME');
-        $this->password = getenv('PASSWORD');
-
-        $this->connect();
-    }
+//    public function __construct()
+//    {
+//        $this->host = getenv('HOST');
+//        $this->port = getenv('PORT');
+//        $this->dbname = getenv('DBNAME');
+//        $this->username = getenv('USERNAME');
+//        $this->password = getenv('PASSWORD');
+//
+//        $this->connect();
+//    }
 
     /**
      * Alternative DB constructor for connection to the Homestead virtual DB server
@@ -35,16 +35,16 @@ class DB
      * @param string $username
      * @param string $password
      */
-//    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
-//    {
-//        $this->servername = $servername;
-//        $this->port = $port;
-//        $this->dbname = $dbname;
-//        $this->username = $username;
-//        $this->password = $password;
-//
-//        $this->connect();
-//    }
+    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
+    {
+        $this->servername = $servername;
+        $this->port = $port;
+        $this->dbname = $dbname;
+        $this->username = $username;
+        $this->password = $password;
+
+        $this->connect();
+    }
 
     public function connect()
     {
@@ -71,6 +71,49 @@ class DB
         return $result;
     }
 
+    public function getAllProjects()
+    {
+        try {
+            $stmt = $this->conn->prepare("
+            SELECT * FROM fab.items
+            INNER JOIN (
+              SELECT MIN(title) title, projectID FROM fab.items
+              WHERE projectID IS NOT NULL
+              GROUP BY projectID
+            ) b ON items.projectID = b.projectID and items.title LIKE b.title;
+            ");
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getAllProjectItemsByProjectID($projectID)
+    {
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT * FROM fab.items 
+                JOIN fab.projects ON projects.id = items.projectID 
+                WHERE projectID = :projectID");
+            $stmt->bindParam('projectID', $projectID);
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getItem($urlName)
     {
         $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE :urlName");
@@ -79,7 +122,7 @@ class DB
 
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetch();
 
         return $result;
     }
@@ -97,10 +140,41 @@ class DB
         return $result;
     }
 
+    public function getNextProject($item)
+    {
+        $stmt = $this->conn->prepare(" 
+             select * from fab.items 
+             where projectID = (
+                 select min(projectID) from fab.items 
+                 where projectID > :projectID
+             ); ");
+        $stmt->bindParam(':projectID', $item['projectID']);
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
     public function getPreviousItem($item)
     {
         $stmt = $this->conn->prepare(" select * from fab.items where id = (select max(id) from fab.items where id < :id) ");
         $stmt->bindParam(':id', $item['id']);
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result;
+    }
+
+    public function getPreviousProject($item)
+    {
+        $stmt = $this->conn->prepare(" select * from fab.items where projectID = (select max(projectID) from fab.items where projectID < :projectID) ");
+        $stmt->bindParam(':projectID', $item['projectID']);
         $stmt->execute();
 
         // set the resulting array to associative

@@ -14,8 +14,8 @@ $router = new Router\Router();
 /******** GET ********/
 //Public
 $router->get('/', 'MainController', 'index');
-$router->get('/portfolio', 'ItemsController', 'showAllItems');
-$router->get('/portfolio/[\w\d]+', 'ItemsController', 'single_item');
+$router->get('/portfolio', 'ItemsController', 'showAllProjects');
+$router->get('/portfolio/[\w\d]+', 'ItemsController', 'showAllProjectItems');
 $router->get('/about', 'MainController', 'about');
 $router->get('/contact', 'MainController', 'contact');
 //Admin - Items
