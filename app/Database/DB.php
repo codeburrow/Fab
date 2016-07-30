@@ -229,21 +229,13 @@ class DB
     {
         if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
 
-            $tags = "";
-            if (isset($data['tags'])) {
-                foreach ($data['tags'] as $tag) {
-                    $tags .= $tag . ' ';
-                }
-            }
-
-            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`, `projectID`)
-    VALUES (:image, :description, :title, :subtitle, :urlName, :tags, :projectID)");
+            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `projectID`)
+    VALUES (:image, :description, :title, :subtitle, :urlName, :projectID)");
             $stmt->bindParam(':image', $imageName);
             $stmt->bindParam(':description', $data['description']);
             $stmt->bindParam(':title', $data['title']);
             $stmt->bindParam(':subtitle', $data['subtitle']);
             $stmt->bindParam(':urlName', $data['urlName']);
-            $stmt->bindParam(':tags', $tags);
             $stmt->bindParam(':projectID', $data['projectID']);
             $result = $stmt->execute();
 
