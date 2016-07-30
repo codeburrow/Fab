@@ -67,7 +67,7 @@ class DB
             JOIN fab.projects ON items.projectID = projects.id;
             ");
         $stmt->execute();
-        
+
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
@@ -86,7 +86,7 @@ class DB
 
         return $result;
     }
-    
+
     public function getAllProjects()
     {
         $stmt = $this->conn->prepare("SELECT * FROM fab.projects");
@@ -227,24 +227,16 @@ class DB
 
     public function addItem($data, $imageName)
     {
-        if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
-
-            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `projectID`)
-    VALUES (:image, :description, :title, :subtitle, :urlName, :projectID)");
+            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `projectID`)
+    VALUES (:image, :description, :title, :subtitle,, :projectID)");
             $stmt->bindParam(':image', $imageName);
             $stmt->bindParam(':description', $data['description']);
             $stmt->bindParam(':title', $data['title']);
             $stmt->bindParam(':subtitle', $data['subtitle']);
-            $stmt->bindParam(':urlName', $data['urlName']);
             $stmt->bindParam(':projectID', $data['projectID']);
             $result = $stmt->execute();
 
             return $result = $result == true ? $result = "" : $result = "Error inserting into database.";
-        } else {
-            $errorMessage = "Only letters and numbers allowed in the URL name";
-
-            return $errorMessage;
-        }
     }
 
     public function deleteItems($data)
@@ -323,16 +315,14 @@ WHERE id=:id ;");
 
                 if (!empty($dbItems)) {
 
-                    $urlName = $data['urlName'][$itemID];
                     $title = $data['title'][$itemID];
                     $subtitle = $data['subtitle'][$itemID];
                     $description = $data['description'][$itemID];
                     $projectID = $data['name'][$itemID];
 
                     try {
-                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, description=:description, projectID=:projectID WHERE id=:id;");
+                        $update_item = $this->conn->prepare("UPDATE fab.items SET title=:title, subtitle=:subtitle, description=:description, projectID=:projectID WHERE id=:id;");
                         $update_item->bindParam(':id', $itemID);
-                        $update_item->bindParam(':urlName', $urlName);
                         $update_item->bindParam(':title', $title);
                         $update_item->bindParam(':subtitle', $subtitle);
                         $update_item->bindParam(':description', $description);
@@ -391,27 +381,35 @@ WHERE id=:id ;");
 
     public function addProject($data)
     {
-        $tags = "";
-        if (isset($data['tags'])) {
-            foreach ($data['tags'] as $tag) {
-                $tags .= $tag . ' ';
+        if (preg_match("/^[a-zA-Z0-9]*$/", $data['urlName'])) {
+
+            $tags = "";
+            if (isset($data['tags'])) {
+                foreach ($data['tags'] as $tag) {
+                    $tags .= $tag . ' ';
+                }
             }
+
+            try {
+                $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `urlName`, `projectDescription`, `tags`)
+                                          VALUES (:name, :urlName, :description, :tags);");
+                $stmt->bindParam(':name', $data['name']);
+                $stmt->bindParam(':urlName', $data['urlName']);
+                $stmt->bindParam(':description', $data['description']);
+                $stmt->bindParam(':tags', $tags);
+                $result = $stmt->execute();
+
+                $result == true ? $result = "" : $result = "Error inserting into database.";
+            } catch (PDOException $e) {
+                $result = "Error: This project name already exists!\n" . $e->getMessage();
+            }
+
+            return $result;
+        } else {
+            $errorMessage = "Only letters and numbers allowed in the URL name";
+
+            return $errorMessage;
         }
-
-        try {
-            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `projectDescription`, `tags`)
-                                          VALUES (:name, :description, :tags);");
-            $stmt->bindParam(':name', $data['name']);
-            $stmt->bindParam(':description', $data['description']);
-            $stmt->bindParam(':tags', $tags);
-            $result = $stmt->execute();
-
-            $result == true ? $result = "" : $result = "Error inserting into database.";
-        } catch (PDOException $e) {
-            $result = "Error: This project name already exists!\n" . $e->getMessage();
-        }
-
-        return $result;
     }
 
     public function deleteProjects($data)
@@ -480,13 +478,15 @@ WHERE id=:id ;");
                 if (!empty($dbProjects)) {
 
                     $name = $data['name'][$projectID];
+                    $urlName = $data['urlName'][$projectID];
                     $description = $data['description'][$projectID];
                     $tags = $data['tags'][$projectID];
 
                     try {
-                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName,  projectDescription=:description, tags=:tags WHERE id=:id;");
+                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName, urlName=:urlName,  projectDescription=:description, tags=:tags WHERE id=:id;");
                         $update_item->bindParam(':id', $projectID);
                         $update_item->bindParam(':projectName', $name);
+                        $update_item->bindParam(':urlName', $urlName);
                         $update_item->bindParam(':description', $description);
                         $update_item->bindParam(':tags', $tags);
                         $result_editItem = $update_item->execute();
@@ -527,7 +527,7 @@ WHERE id=:id ;");
         }
     }
 
-    
+
 //    public function getCarouselPosts()
 //    {
 //        $stmt = $this->conn->prepare("SELECT * FROM kourtis.posts WHERE kourtis.posts.inCarousel = 1");

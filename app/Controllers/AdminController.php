@@ -275,6 +275,7 @@ class AdminController extends Controller
     public function postEditProject()
     {
         $myDB = new DB();
+        
         $result = $myDB->editProjects($_POST);
 
         $this->editProject($result);

@@ -40,7 +40,6 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Project</th>
-                                        <th>URL Name</th>
                                         <th>Title</th>
                                         <th>Subtitle</th>
                                         <th>Description</th>
@@ -60,7 +59,6 @@
                                                     {% endfor %}
                                                 </select>
                                             </td>
-                                            <td><input style="border: 1px solid lightblue;" type="text" name="urlName[{{ item.id }}]" value="{{ item.urlName }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="title[{{ item.id }}]" value="{{ item.title }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="subtitle[{{ item.id }}]" value="{{ item.subtitle }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="description[{{ item.id }}]" value="{{ item.description }}"></td>

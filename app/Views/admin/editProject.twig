@@ -40,6 +40,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>URL Name</th>
                                         <th>Description</th>
                                         <th>Tags</th>
                                     </tr>
@@ -50,6 +51,7 @@
                                         <tr>
                                             <td><input type="checkbox" name="projects[]" value="{{ project.id }}"/></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="name[{{ project.id }}]" value="{{ project.name }}"></td>
+                                            <td><input style="border: 1px solid lightblue;" type="text" name="urlName[{{ project.id }}]" value="{{ project.urlName }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="description[{{ project.id }}]" value="{{ project.projectDescription }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="tags[{{ project.id }}]" value="{{ project.tags }}"></td>
                                         </tr>
