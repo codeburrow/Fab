@@ -39,6 +39,7 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Project</th>
                                         <th>URL Name</th>
                                         <th>Title</th>
                                         <th>Subtitle</th>
@@ -52,6 +53,7 @@
                                     {% for item in items %}
                                         <tr>
                                             <td><input type="checkbox" name="items[]" value="{{ item.id }}"/></td>
+                                            <td>{{ item.name }}</td>
                                             <td>{{ item.urlName }}</td>
                                             <td>{{ item.title }}</td>
                                             <td>{{ item.subtitle }}</td>

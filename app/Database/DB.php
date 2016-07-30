@@ -61,7 +61,11 @@ class DB
 
     public function getAllItems()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM fab.items");
+        $stmt = $this->conn->prepare("
+            SELECT items.*, projects.id AS theID, projects.name, projects.projectDescription
+            FROM fab.items 
+            JOIN fab.projects ON items.projectID = projects.id;
+            ");
         $stmt->execute();
 
         // set the resulting array to associative
