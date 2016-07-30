@@ -41,6 +41,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Description</th>
+                                        <th>Tags</th>
                                     </tr>
                                     </thead>
 
@@ -50,6 +51,7 @@
                                             <td><input type="checkbox" name="projects[]" value="{{ project.id }}"/></td>
                                             <td>{{ project.name }}</td>
                                             <td>{{ project.projectDescription }}</td>
+                                            <td>{{ project.tags }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
