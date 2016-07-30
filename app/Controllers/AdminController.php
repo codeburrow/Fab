@@ -112,8 +112,13 @@ class AdminController extends Controller
     /**** ITEMS ****/
     public function addItem()
     {
-        if ($this->adminIsLoggedIn())
-            echo $this->twig->render('addItem.twig');
+        if ($this->adminIsLoggedIn()) {
+            $myDB = new DB();
+
+            $projects = $myDB->getAllProjects();    
+        
+            echo $this->twig->render('addItem.twig', array('projects'=>$projects));
+        }
         else
             echo $this->twig->render('login.twig');
     }

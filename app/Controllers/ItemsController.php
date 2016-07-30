@@ -42,6 +42,7 @@ class ItemsController extends Controller
 
         $projects = $myDB->getAllProjectsForPortfolio();
 
+        //Add project fields (column values) to existing array
         $count = 0;
         foreach ($projects as $project) {
             $fullProject = $myDB->getProjectByID($project['projectID']);

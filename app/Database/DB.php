@@ -70,6 +70,18 @@ class DB
 
         return $result;
     }
+
+    public function getItemsWithNoProject()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE projectID IS NULL");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
     
     public function getAllProjects()
     {
@@ -219,14 +231,15 @@ class DB
                     $tags .= $tag . ' ';
                 }
 
-            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`)
-    VALUES (:image, :description, :title, :subtitle, :urlName, :tags)");
+            $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`, `projectID`)
+    VALUES (:image, :description, :title, :subtitle, :urlName, :tags, :projectID)");
             $stmt->bindParam(':image', $imageName);
             $stmt->bindParam(':description', $data['description']);
             $stmt->bindParam(':title', $data['title']);
             $stmt->bindParam(':subtitle', $data['subtitle']);
             $stmt->bindParam(':urlName', $data['urlName']);
             $stmt->bindParam(':tags', $tags);
+            $stmt->bindParam(':projectID', $data['projectID']);
             $result = $stmt->execute();
 
             return $result = $result == true ? $result = "" : $result = "Error inserting into database.";
