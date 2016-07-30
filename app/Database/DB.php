@@ -491,12 +491,14 @@ WHERE id=:id ;");
 
                     $name = $data['name'][$projectID];
                     $description = $data['description'][$projectID];
+                    $tags = $data['tags'][$projectID];
 
                     try {
-                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName,  projectDescription=:description WHERE id=:id;");
+                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName,  projectDescription=:description, tags=:tags WHERE id=:id;");
                         $update_item->bindParam(':id', $projectID);
                         $update_item->bindParam(':projectName', $name);
                         $update_item->bindParam(':description', $description);
+                        $update_item->bindParam(':tags', $tags);
                         $result_editItem = $update_item->execute();
                     } catch (PDOException $ex) {
                         // For testing, you could use a die and message.

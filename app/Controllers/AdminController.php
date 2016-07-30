@@ -260,13 +260,13 @@ class AdminController extends Controller
         echo $this->twig->render('deleteProject.twig', array('projects' => $projects, 'result' => $result));
     }
 
-    public function editProject()
+    public function editProject($result=null)
     {
         if ($this->adminIsLoggedIn()) {
             $myDB = new DB();
             $projects = $myDB->getAllProjects();
 
-            echo $this->twig->render('editProject.twig', array('projects' => $projects));
+            echo $this->twig->render('editProject.twig', array('projects' => $projects, 'result' => $result));
         } else {
             echo $this->twig->render('login.twig');
         }
@@ -277,9 +277,7 @@ class AdminController extends Controller
         $myDB = new DB();
         $result = $myDB->editProjects($_POST);
 
-        $projects = $myDB->getAllProjects();
-
-        echo $this->twig->render('editProject.twig', array('projects' => $projects, 'result' => $result));
+        $this->editProject($result);
     }
 
 
