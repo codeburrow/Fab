@@ -381,7 +381,7 @@ WHERE id=:id ;");
 
     public function addProject($data)
     {
-        if (preg_match("/^[a-zA-Z0-9]*$/", $data['urlName'])) {
+        if (preg_match("/^[a-zA-Z0-9-]*$/", $data['urlName'])) {
 
             $tags = "";
             if (isset($data['tags'])) {
@@ -406,7 +406,7 @@ WHERE id=:id ;");
 
             return $result;
         } else {
-            $errorMessage = "Only letters and numbers allowed in the URL name";
+            $errorMessage = "Only letters, numbers, and the dash ( - ) are allowed in the URL name";
 
             return $errorMessage;
         }
@@ -477,36 +477,45 @@ WHERE id=:id ;");
 
                 if (!empty($dbProjects)) {
 
-                    $name = $data['name'][$projectID];
-                    $urlName = $data['urlName'][$projectID];
-                    $description = $data['description'][$projectID];
-                    $tags = $data['tags'][$projectID];
+                    if (preg_match("/^[a-zA-Z0-9-]*$/", $data['urlName'][$projectID])) {
 
-                    try {
-                        $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName, urlName=:urlName,  projectDescription=:description, tags=:tags WHERE id=:id;");
-                        $update_item->bindParam(':id', $projectID);
-                        $update_item->bindParam(':projectName', $name);
-                        $update_item->bindParam(':urlName', $urlName);
-                        $update_item->bindParam(':description', $description);
-                        $update_item->bindParam(':tags', $tags);
-                        $result_editItem = $update_item->execute();
-                    } catch (PDOException $ex) {
-                        // For testing, you could use a die and message.
-                        //die("Failed to run query: " . $ex->getMessage());
 
-                        //or just use this use this one to product JSON data:
-                        $response["success"] = 0;
-                        $response["message"] = "Database Error 2: " . $ex->getMessage();
+                        $name = $data['name'][$projectID];
+                        $urlName = $data['urlName'][$projectID];
+                        $description = $data['description'][$projectID];
+                        $tags = $data['tags'][$projectID];
 
-                        return $response;
-                    }
+                        try {
+                            $update_item = $this->conn->prepare("UPDATE fab.projects SET name=:projectName, urlName=:urlName,  projectDescription=:description, tags=:tags WHERE id=:id;");
+                            $update_item->bindParam(':id', $projectID);
+                            $update_item->bindParam(':projectName', $name);
+                            $update_item->bindParam(':urlName', $urlName);
+                            $update_item->bindParam(':description', $description);
+                            $update_item->bindParam(':tags', $tags);
+                            $result_editItem = $update_item->execute();
+                        } catch (PDOException $ex) {
+                            // For testing, you could use a die and message.
+                            //die("Failed to run query: " . $ex->getMessage());
 
-                    if ($result_editItem) {
-                        $response["success"] = 1;
-                        $response["message"] = "Project(s) Successfully Edited ";
+                            //or just use this use this one to product JSON data:
+                            $response["success"] = 0;
+                            $response["message"] = "Database Error 2: " . $ex->getMessage();
+
+                            return $response;
+                        }
+
+                        if ($result_editItem) {
+                            $response["success"] = 1;
+                            $response["message"] = "Project(s) Successfully Edited ";
+                        } else {
+                            $response["success"] = 0;
+                            $response["message"] = "Project(s) Could Not Be Edited ";
+                        }
                     } else {
                         $response["success"] = 0;
-                        $response["message"] = "Project(s) Could Not Be Edited ";
+                        $response["message"] = "Only letters, numbers, and the dash ( - ) are allowed in the URL name";
+
+                        return $response;
                     }
 
                 } else {
