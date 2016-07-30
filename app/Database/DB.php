@@ -230,10 +230,11 @@ class DB
         if (preg_match("/^[a-zA-Z0-9 ]*$/", $data['urlName'])) {
 
             $tags = "";
-            if (isset($data['tags']))
+            if (isset($data['tags'])) {
                 foreach ($data['tags'] as $tag) {
                     $tags .= $tag . ' ';
                 }
+            }
 
             $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `urlName`, `tags`, `projectID`)
     VALUES (:image, :description, :title, :subtitle, :urlName, :tags, :projectID)");
@@ -400,11 +401,19 @@ WHERE id=:id ;");
 
     public function addProject($data)
     {
+        $tags = "";
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $tags .= $tag . ' ';
+            }
+        }
+
         try {
-            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `projectDescription`)
-                                          VALUES (:name, :description);");
+            $stmt = $this->conn->prepare("INSERT INTO fab.projects (`name`, `projectDescription`, `tags`)
+                                          VALUES (:name, :description, :tags);");
             $stmt->bindParam(':name', $data['name']);
             $stmt->bindParam(':description', $data['description']);
+            $stmt->bindParam(':tags', $tags);
             $result = $stmt->execute();
 
             $result == true ? $result = "" : $result = "Error inserting into database.";
