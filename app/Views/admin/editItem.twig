@@ -39,6 +39,7 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Project</th>
                                         <th>URL Name</th>
                                         <th>Title</th>
                                         <th>Subtitle</th>
@@ -52,6 +53,14 @@
                                     {% for item in items %}
                                         <tr>
                                             <td><input type="checkbox" name="items[]" value="{{ item.id }}"/></td>
+                                            <td>
+                                                <select name="name[{{ item.id }}]" class="form-control col-md-7 col-xs-12">
+                                                    <option value="{{ item.theID }}" selected>{{ item.name }}</option>
+                                                    {% for project in projects %}
+                                                        <option value="{{ project.id }}">{{ project.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="urlName[{{ item.id }}]" value="{{ item.urlName }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="title[{{ item.id }}]" value="{{ item.title }}"></td>
                                             <td><input style="border: 1px solid lightblue;" type="text" name="subtitle[{{ item.id }}]" value="{{ item.subtitle }}"></td>

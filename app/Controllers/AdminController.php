@@ -187,13 +187,14 @@ class AdminController extends Controller
         echo $this->twig->render('deleteItem.twig', array('items' => $items, 'result' => $result, 'message' => $message));
     }
 
-    public function editItem()
+    public function editItem($result=null)
     {
         if ($this->adminIsLoggedIn()) {
             $myDB = new DB();
             $items = $myDB->getAllItems();
+            $projects = $myDB->getAllProjects();
 
-            echo $this->twig->render('editItem.twig', array('items' => $items));
+            echo $this->twig->render('editItem.twig', array('items'=>$items, 'projects'=>$projects, 'result' => $result));
         } else {
             echo $this->twig->render('login.twig');
         }
@@ -202,11 +203,10 @@ class AdminController extends Controller
     public function postEditItem()
     {
         $myDB = new DB();
+        
         $result = $myDB->editItems($_POST);
 
-        $items = $myDB->getAllItems();
-
-        echo $this->twig->render('editItem.twig', array('items' => $items, 'result' => $result));
+        $this->editItem($result);
     }
 
     /**** PROJECTS ****/

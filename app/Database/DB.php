@@ -67,7 +67,7 @@ class DB
             JOIN fab.projects ON items.projectID = projects.id;
             ");
         $stmt->execute();
-
+        
         // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
@@ -335,15 +335,17 @@ WHERE id=:id ;");
                     $subtitle = $data['subtitle'][$itemID];
                     $tags = $data['tags'][$itemID];
                     $description = $data['description'][$itemID];
+                    $projectID = $data['name'][$itemID];
 
                     try {
-                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, tags=:tags, description=:description WHERE id=:id;");
+                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, tags=:tags, description=:description, projectID=:projectID WHERE id=:id;");
                         $update_item->bindParam(':id', $itemID);
                         $update_item->bindParam(':urlName', $urlName);
                         $update_item->bindParam(':title', $title);
                         $update_item->bindParam(':subtitle', $subtitle);
                         $update_item->bindParam(':tags', $tags);
                         $update_item->bindParam(':description', $description);
+                        $update_item->bindParam(':projectID', $projectID);
                         $result_editItem = $update_item->execute();
                     } catch (PDOException $ex) {
                         // For testing, you could use a die and message.
@@ -351,7 +353,7 @@ WHERE id=:id ;");
 
                         //or just use this use this one to product JSON data:
                         $response["success"] = 0;
-                        $response["message"] = "Database Error 2. Please Try Again!";
+                        $response["message"] = "Error: " . $ex->getMessage();
 
                         return $response;
                     }
