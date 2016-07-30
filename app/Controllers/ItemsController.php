@@ -48,6 +48,7 @@ class ItemsController extends Controller
             $fullProject = $myDB->getProjectByID($project['projectID']);
             $project['projectDescription'] = $fullProject['projectDescription'];
             $project['projectName'] = $fullProject['name'];
+            $project['projectTags'] = $fullProject['tags'];
             $projects[$count] = $project;
             $count++;
         }

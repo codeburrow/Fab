@@ -22,7 +22,7 @@
                         <div class="grid-sizer"></div>
 
                         {% for project in projects %}
-                            <div class="item {{ project.tags|e }}">
+                            <div class="item {{ project.projectTags|e }}">
                                 <a href="/portfolio/{{ project.urlName|e }}"></a>
                                 <div class="det-img ellem"
                                      data-caption="<a href='/portfolio/{{ project.urlName|e }}' class='sleep-title'><span class='vertical-align'><h4>{{ project.projectName|e }}</h4><span class='pr-sutitle'>{{ project.projectDescription|e }}</span></span></a>">
