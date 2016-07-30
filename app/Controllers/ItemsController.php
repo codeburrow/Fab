@@ -5,7 +5,7 @@ use Fab\Database\DB;
 
 class ItemsController extends Controller
 {
-    public function __construct($data=null)
+    public function __construct($data = null)
     {
         parent::__construct($data);
     }
@@ -16,24 +16,27 @@ class ItemsController extends Controller
 
         $items = $myDB->getAllItems();
 
-        echo $this->twig->render( 'portfolio.twig', array('items' => $items) );
+        echo $this->twig->render('portfolio.twig', array('items' => $items));
     }
 
     public function showAllProjectItems()
     {
         $myDB = new DB();
 
-        $urlName = $this->item;
+        $urlName = $this->project;
 
-        $item = $myDB->getItem($urlName);
-        $nextItem = $myDB->getNextProject($item);
-        $previousItem = $myDB->getPreviousProject($item);
-        
-        $projectID = $item['projectID'];
+        $project = $myDB->getProjectByUrlName($urlName);
+        $nextProject = $myDB->getNextProject($project);
+        $previousProject = $myDB->getPreviousProject($project);
 
-        $items = $myDB->getAllProjectItemsByProjectID($projectID);
+        $items = $myDB->getAllProjectItemsByProjectID($project['id']);
 
-        echo $this->twig->render( 'single_item.twig', array('items' => $items, 'nextItem'=>$nextItem, 'previousItem'=>$previousItem) );
+        if (!empty($items)) {
+            echo $this->twig->render('single_item.twig', array('items' => $items, 'nextProject' => $nextProject, 'previousProject' => $previousProject));
+        } else {
+            header("Location: /portfolio/$nextProject", true, 302);
+            exit;
+        }
     }
 
     public function showAllProjects()
@@ -49,26 +52,27 @@ class ItemsController extends Controller
             $project['projectDescription'] = $fullProject['projectDescription'];
             $project['projectName'] = $fullProject['name'];
             $project['projectTags'] = $fullProject['tags'];
+            $project['urlName'] = $fullProject['urlName'];
             $projects[$count] = $project;
             $count++;
         }
-        
-        echo $this->twig->render( 'portfolio.twig', array('projects' => $projects) );
+
+        echo $this->twig->render('portfolio.twig', array('projects' => $projects));
     }
 
     public function single_item()
     {
         $DB = new DB();
 
-        $item = $DB->getItem($this->item);
+        $item = $DB->getItem($this->project);
 
-        if ( !empty($item) ){
+        if (!empty($item)) {
 
             $nextItem = $DB->getNextItem($item);
             $previousItem = $DB->getPreviousItem($item);
-            
-            echo $this->twig->render('single_item.twig', array('item'=>$item, 'nextItem'=>$nextItem, 'previousItem'=>$previousItem));
-            
+
+            echo $this->twig->render('single_item.twig', array('item' => $item, 'nextItem' => $nextItem, 'previousItem' => $previousItem));
+
         } else { //if no items found
             echo $this->twig->render('error404.twig');
         }

@@ -155,9 +155,9 @@ class DB
         return $result;
     }
 
-    public function getItem($urlName)
+    public function getProjectByUrlName($urlName)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM fab.items WHERE urlName LIKE :urlName");
+        $stmt = $this->conn->prepare("SELECT * FROM fab.projects WHERE urlName LIKE :urlName");
         $stmt->bindParam(':urlName', $urlName);
         $stmt->execute();
 
@@ -181,15 +181,15 @@ class DB
         return $result;
     }
 
-    public function getNextProject($item)
+    public function getNextProject($project)
     {
         $stmt = $this->conn->prepare(" 
-             select * from fab.items 
-             where projectID = (
-                 select min(projectID) from fab.items 
-                 where projectID > :projectID
+             select * from fab.projects 
+             where id = (
+                 select min(id) from fab.projects 
+                 where id > :id
              ); ");
-        $stmt->bindParam(':projectID', $item['projectID']);
+        $stmt->bindParam(':id', $project['id']);
         $stmt->execute();
 
         // set the resulting array to associative
@@ -212,10 +212,10 @@ class DB
         return $result;
     }
 
-    public function getPreviousProject($item)
+    public function getPreviousProject($project)
     {
-        $stmt = $this->conn->prepare(" select * from fab.items where projectID = (select max(projectID) from fab.items where projectID < :projectID) ");
-        $stmt->bindParam(':projectID', $item['projectID']);
+        $stmt = $this->conn->prepare(" select * from fab.projects where id = (select max(id) from fab.projects where id < :id) ");
+        $stmt->bindParam(':id', $project['id']);
         $stmt->execute();
 
         // set the resulting array to associative
