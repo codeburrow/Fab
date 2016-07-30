@@ -326,17 +326,15 @@ WHERE id=:id ;");
                     $urlName = $data['urlName'][$itemID];
                     $title = $data['title'][$itemID];
                     $subtitle = $data['subtitle'][$itemID];
-                    $tags = $data['tags'][$itemID];
                     $description = $data['description'][$itemID];
                     $projectID = $data['name'][$itemID];
 
                     try {
-                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, tags=:tags, description=:description, projectID=:projectID WHERE id=:id;");
+                        $update_item = $this->conn->prepare("UPDATE fab.items SET urlName=:urlName, title=:title, subtitle=:subtitle, description=:description, projectID=:projectID WHERE id=:id;");
                         $update_item->bindParam(':id', $itemID);
                         $update_item->bindParam(':urlName', $urlName);
                         $update_item->bindParam(':title', $title);
                         $update_item->bindParam(':subtitle', $subtitle);
-                        $update_item->bindParam(':tags', $tags);
                         $update_item->bindParam(':description', $description);
                         $update_item->bindParam(':projectID', $projectID);
                         $result_editItem = $update_item->execute();
