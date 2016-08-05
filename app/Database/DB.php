@@ -16,16 +16,16 @@ class DB
     /**
      * DB constructor. By default connect to papaki.gr DB (MySQL) and to the 'fab' database schema.
      */
-//    public function __construct()
-//    {
-//        $this->host = getenv('HOST');
-//        $this->port = getenv('PORT');
-//        $this->dbname = getenv('DBNAME');
-//        $this->username = getenv('USERNAME');
-//        $this->password = getenv('PASSWORD');
-//
-//        $this->connect();
-//    }
+   public function __construct()
+   {
+       $this->host = getenv('HOST');
+       $this->port = getenv('PORT');
+       $this->dbname = getenv('DBNAME');
+       $this->username = getenv('USERNAME');
+       $this->password = getenv('PASSWORD');
+
+       $this->connect();
+   }
 
     /**
      * Alternative DB constructor for connection to the Homestead virtual DB server
@@ -35,16 +35,16 @@ class DB
      * @param string $username
      * @param string $password
      */
-    public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
-    {
-        $this->servername = $servername;
-        $this->port = $port;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
+    // public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
+    // {
+    //     $this->servername = $servername;
+    //     $this->port = $port;
+    //     $this->dbname = $dbname;
+    //     $this->username = $username;
+    //     $this->password = $password;
 
-        $this->connect();
-    }
+    //     $this->connect();
+    // }
 
     public function connect()
     {
