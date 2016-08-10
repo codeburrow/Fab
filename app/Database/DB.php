@@ -35,16 +35,16 @@ class DB
      * @param string $username
      * @param string $password
      */
-    // public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
-    // {
-    //     $this->servername = $servername;
-    //     $this->port = $port;
-    //     $this->dbname = $dbname;
-    //     $this->username = $username;
-    //     $this->password = $password;
-
-    //     $this->connect();
-    // }
+//     public function __construct($servername = "127.0.0.1", $port = "33060", $dbname = "fab", $username = "homestead", $password = "secret")
+//     {
+//         $this->servername = $servername;
+//         $this->port = $port;
+//         $this->dbname = $dbname;
+//         $this->username = $username;
+//         $this->password = $password;
+//
+//         $this->connect();
+//     }
 
     public function connect()
     {
@@ -181,6 +181,22 @@ class DB
         return $result;
     }
 
+    public function getFirstProject()
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM fab.projects LIMIT 1;");
+            $stmt->execute();
+
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+
+            return $result;
+        } catch (PDOException $e) {
+            $result = $e->getMessage();
+        }
+    }
+
     public function getNextProject($project)
     {
         $stmt = $this->conn->prepare(" 
@@ -227,13 +243,20 @@ class DB
 
     public function addItem($data, $imageName)
     {
+        if (!isset($data['projectID'])) {
+            $firstProject = $this->getFirstProject();
+            $projectID = $firstProject['id'];
+        } else {
+            $projectID = $data['projectID'];
+        }
+
             $stmt = $this->conn->prepare("INSERT INTO fab.items (`image`, `description`, `title`, `subtitle`, `projectID`)
-    VALUES (:image, :description, :title, :subtitle,, :projectID)");
+    VALUES (:image, :description, :title, :subtitle, :projectID);");
             $stmt->bindParam(':image', $imageName);
             $stmt->bindParam(':description', $data['description']);
             $stmt->bindParam(':title', $data['title']);
             $stmt->bindParam(':subtitle', $data['subtitle']);
-            $stmt->bindParam(':projectID', $data['projectID']);
+            $stmt->bindParam(':projectID', $projectID);
             $result = $stmt->execute();
 
             return $result = $result == true ? $result = "" : $result = "Error inserting into database.";
