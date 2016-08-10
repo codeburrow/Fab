@@ -110,14 +110,15 @@ class AdminController extends Controller
     }
 
     /**** ITEMS ****/
-    public function addItem()
+    public function addItem($flashMessage=null, $success=null)
     {
         if ($this->adminIsLoggedIn()) {
+
             $myDB = new DB();
 
             $projects = $myDB->getAllProjects();    
-        
-            echo $this->twig->render('addItem.twig', array('projects'=>$projects));
+
+            echo $this->twig->render('addItem.twig', array('projects'=>$projects, 'flashMessage' => $flashMessage, 'success' => $success));
         }
         else
             echo $this->twig->render('login.twig');
@@ -150,7 +151,7 @@ class AdminController extends Controller
             $flashMessage = $uploadError . "\nError: Could not upload image.";
         }
 
-        echo $this->twig->render('addItem.twig', array('flashMessage' => $flashMessage, 'success' => $success));
+        $this->addItem($flashMessage, $success);
     }
 
     public function deleteItem()

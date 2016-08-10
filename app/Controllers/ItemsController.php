@@ -10,15 +10,6 @@ class ItemsController extends Controller
         parent::__construct($data);
     }
 
-    public function showAllItems()
-    {
-        $myDB = new DB();
-
-        $items = $myDB->getAllItems();
-
-        echo $this->twig->render('portfolio.twig', array('items' => $items));
-    }
-
     public function showAllProjectItems()
     {
         $myDB = new DB();
@@ -58,24 +49,6 @@ class ItemsController extends Controller
         }
 
         echo $this->twig->render('portfolio.twig', array('projects' => $projects));
-    }
-
-    public function single_item()
-    {
-        $DB = new DB();
-
-        $item = $DB->getItem($this->project);
-
-        if (!empty($item)) {
-
-            $nextItem = $DB->getNextItem($item);
-            $previousItem = $DB->getPreviousItem($item);
-
-            echo $this->twig->render('single_item.twig', array('item' => $item, 'nextItem' => $nextItem, 'previousItem' => $previousItem));
-
-        } else { //if no items found
-            echo $this->twig->render('error404.twig');
-        }
     }
 
 }

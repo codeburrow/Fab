@@ -105,10 +105,11 @@ class DB
             $stmt = $this->conn->prepare("
             SELECT * FROM fab.items
             INNER JOIN (
-              SELECT MIN(title) title, projectID FROM fab.items
+              SELECT MIN(id) id, projectID FROM fab.items
               WHERE projectID IS NOT NULL
               GROUP BY projectID
-            ) b ON items.projectID = b.projectID and items.title LIKE b.title;
+            ) b ON items.projectID = b.projectID and items.id LIKE b.id
+            ORDER BY b.projectID;
             ");
             $stmt->execute();
 
