@@ -42,8 +42,8 @@ class SwiftMailer
 
         // Create the Transport
         $transport = Swift_SmtpTransport::newInstance('mail.fabgraphics.gr')
-			->setUsername('support@fabgraphics.gr')
-			->setPassword('Davrazos612')
+			->setUsername(getenv('FAB_MAIL'))
+			->setPassword(getenv('FAB_PASS'))
         ;
 
         // Create the Mailer using your created Transport
@@ -112,8 +112,8 @@ class SwiftMailer
 
         // Create the Transport
         $transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-			->setUsername('fab.agia@gmail.com')
-			->setPassword('faber2015')
+			->setUsername(getenv('MAIL'))
+			->setPassword(getenv('GMAIL_PASS'))
         ;
 
         // Create the Mailer using your created Transport

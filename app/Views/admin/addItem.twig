@@ -45,16 +45,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="projectID"
-                                           class="control-label col-md-3 col-sm-3 col-xs-12">Project</label>
+                                    <label for="projectID" class="control-label col-md-3 col-sm-3 col-xs-12">Project</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
 
-                                        <select id="projectID" name="projectID" class="form-control col-md-7 col-xs-12">
-                                            {% for project in projects %}
-                                                <option value="{{ project.id }}">{{ project.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
+                                    <select id="projectID" name="projectID" class="form-control col-md-7 col-xs-12">
+                                        {% for project in projects %}
+                                            <option value="{{ project.id }}">{{ project.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                        </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="control-label col-md-3 col-sm-3 col-xs-12">Description </label>
@@ -69,8 +68,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <label class="btn btn-default btn-primary btn-file">
-                                            <input type="file" name="image" id="image" style="display:none;"
-                                                   onchange="$('#upload-file-info').html($(this).val());">
+                                            <input type="file" name="image" id="image" style="display:none;" onchange="$('#upload-file-info').html($(this).val());">
                                             Browse
                                         </label>
                                         <span class='label label-info' id="upload-file-info"></span>
